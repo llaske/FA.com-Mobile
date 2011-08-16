@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Articles</title>
+  <link rel="stylesheet" href="framework/jquery.mobile-1.0b1.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <script src="framework/jquery-1.6.2.min.js"></script>
+  <script src="framework/jquery.mobile-1.0b1.min.js"></script>
+  <script src="preferences.js"></script>
+  <script src="history.js"></script>  
+  <script src="articles.js"></script>
+  <script src="matchs.js"></script>
+  <script src="equipe.js"></script> 
+  <script src="classements.js"></script> 
+</head>
+<body>
+ 
+<!-- Main page -->
+<div data-role="page" id="pg_matchs" data-url="/mobile/matchs.html" data-theme="b">
+   <div data-role="header" id="header">
+    <h1>FootballAmericain.com</h1>
+  </div>
+ 
+  <div data-role="content" id="content">	
+	<ul data-role='listview' id="matchs">
+	</ul>
+  </div>
+ 
+  <div data-role="footer" data-position="fixed">
+    <a href="index.html" data-role="button" id="btnArticles">Articles</a>
+    <a href="matchs.html" data-role="button" id="btnScores">Scores</a>
+    <a href="classements.html" data-role="button" id="btnClassements">Classements</a>
+    <a href="filtrer.html" data-icon="gear" data-role="button" id="btnFiltrer">Filtrer</a>	
+  </div>  
+</div>
+
+<!-- Error page -->
+<div data-role="dialog" id="error">
+  <div data-role="header" data-position="inline">
+    <h1>FootballAmericain.com</h1>
+  </div>
+  
+  <div data-role="content" id="message">	
+	<p>Erreur de chargement des matchs. Réessayez ultérieurement</p>
+  </div>
+</div>
+ 
+</body>
+</html>

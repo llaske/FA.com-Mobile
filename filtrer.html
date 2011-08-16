@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Filtrer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
+  <link rel="stylesheet" href="framework/jquery.mobile-1.0b1.min.css" />
+  <script src="framework/jquery-1.6.2.min.js"></script>
+  <script src="framework/jquery.mobile-1.0b1.min.js"></script>
+   <script src="preferences.js"></script>
+</head>
+<body>
+ 
+<!-- Main page -->
+<div data-role="page" data-add-back-btn="true" data-back-btn-text="Retour" id="pg_filtrer" data-theme="b">
+  <div data-role="header" id="header">
+    <h1>FootballAmericain.com</h1>
+  </div>
+ 
+  <div data-role="content" data-theme="d" id="filtrer">	
+	<fieldset data-role="controlgroup" data-type="horizontal">	
+		<label for="nfl">NFL:</label>
+		<select name="nfl" id="nfl" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on" selected>On</option>
+		</select>
+	</fieldset>
+	<fieldset data-role="controlgroup" data-type="horizontal">	
+		<label for="ncaa">NCAA:</label>
+		<select name="ncaa" id="ncaa" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select>
+	</fieldset>
+	<fieldset data-role="controlgroup" data-type="horizontal">	
+		<label for="elite">Elite:</label>
+		<select name="elite" id="elite" data-role="slider">
+			<option value="off">Off</option>
+			<option value="on">On</option>
+		</select>	
+	</fieldset>
+  </div>
+ 
+</div>
+ 
+</body>
+</html>

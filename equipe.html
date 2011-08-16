@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Equipe</title>
+  <link rel="stylesheet" href="framework/jquery.mobile-1.0b1.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <script src="framework/jquery-1.6.2.min.js"></script>
+  <script src="framework/jquery.mobile-1.0b1.min.js"></script>
+</head>
+<body>
+ 
+<!-- Main page -->
+<div data-role="page" data-add-back-btn="true" data-back-btn-text="Retour" id="pg_equipe" data-theme="b">
+   <div data-role="header" id="header">
+    <h1>FootballAmericain.com</h1>
+  </div>
+ 
+  <div data-role="content" data-theme="d" id="team">	
+	<h4 id="nom">Ville + Nom</h4>
+	<div id="image"></div>
+	<div id="creation"></div>
+	<div data-role="collapsible" style="margin-right=10px" data-collapsed="true" id="matchs_collapse">
+		<h3>Matchs</h3>
+		<ul data-role='listview' data-inset='true' id="matchs_equipe">
+		</ul>	
+	</div>	
+	<ul style="margin-top: 20px" data-role='listview' id="articles_equipe">
+	</ul>	
+  </div>
+ 
+</div>
+
+<!-- Error page -->
+<div data-role="dialog" id="error">
+  <div data-role="header" data-position="inline">
+    <h1>FootballAmericain.com</h1>
+  </div>
+  
+  <div data-role="content" id="message">	
+	<p>Erreur de chargement de l'équipe. Réessayez ultérieurement</p>
+  </div>
+</div>
+ 
+</body>
+</html>
