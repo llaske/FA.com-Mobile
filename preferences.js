@@ -1,9 +1,21 @@
 
 //----------------- Global constants
 
+prefixSite = "/mobile/";
 prefixBackoffice = "backoffice/";
 prefixImages = "http://www.footballamericain.com/images/";
 
+
+// Override data-url with site prefix
+$("[data-role='page']").live('pagebeforecreate',function(event){
+	$("[data-role='page']").each(function(){
+		var dataurl = $(this).attr("data-url");
+		if(typeof dataurl != "undefined" && dataurl.indexOf(prefixSite) != 0) {
+			dataurl = prefixSite + $(this).attr("data-url");
+			$(this).attr("data-url", dataurl);
+		}
+	})
+});
 
 //----------------- Preferences handling
 
