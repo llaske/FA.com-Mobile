@@ -102,20 +102,25 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 					var theme;
 					var place;
 					var opponent;
-					if ( (this.equipedom == team.id && this.scoredom > this.scoreext)
-					|| (this.equipeext == team.id && this.scoreext > this.scoredom) ) {
+					var score;
+					var opponentscore;
+					if ( this.equipedom == team.id ) {
+						place = 'vs ';
+						score = this.scoredom;
+						opponent = this.equipeext;
+						opponentscore = this.scoreext;
+					} else {
+						place = '@';
+						score = this.scoreext;
+						opponent = this.equipedom;
+						opponentscore = this.scoredom;
+					}
+					if (parseInt(score) > parseInt(opponentscore)) {
 						result = ' V ';
 						theme = 'b';
 					} else {
 						result = ' D ';
 						theme = 'c';
-					}
-					if ( this.equipedom == team.id ) {
-						place = 'vs ';
-						opponent = this.equipeext;
-					} else {
-						place = '@';
-						opponent = this.equipedom;
 					}
 					
 					// Append line
