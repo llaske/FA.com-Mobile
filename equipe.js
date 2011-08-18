@@ -9,6 +9,10 @@ TeamCache.bulkCount = 0;
 // Load a bulk of team
 TeamCache.bulkloadTeams = function(ids, ok_callback, ko_callback) {
 	TeamCache.bulkCount = ids.length;
+	if (TeamCache.bulkCount == 0) {
+		ok_callback();
+		return;
+	}
 	$.each(ids, function(n) {
 		TeamCache.loadTeam(ids[n], ok_callback, ko_callback);
 	});		

@@ -28,13 +28,15 @@
 	connect_db();
 	
 	// Create request to get competition
-	// HACK: Force to 2010
-	$request = "SELECT idCompetition FROM competition 
-				WHERE saison='2010' AND ligue=" . $_GET['ligue'] . "	ORDER BY saison DESC LIMIT 0, 1";
+	$request = "SELECT idCompetition, current_week FROM competition WHERE "; 
+	$season = constant("force_season");
+	if (!empty($season))
+		$request = $request . "saison='" . $season ."' AND ";
+	$request = $request . "ligue=" . $_GET['ligue'] . "	ORDER BY saison DESC LIMIT 0, 1";
 
 	// Run query
 	$result = mysql_query($request);
-
+	
 	// Get last competition
 	if (!($row = mysql_fetch_array($result))) {
 		// Competition not found, stop
@@ -47,8 +49,11 @@
 		close_db();		
 		return;
 	}
-	
+
 	// Create base request
+	$current_week = $row['current_week'];
+	if ($current_week <= 0) 
+		$current_week = 17;	
 	$request = "SELECT ID_EQUIPE, franchise, conf, CLMNT_CONF, division, CLMNT, playoffs, G, N, P, PP, PC
 		FROM standings, franchise, division, division_franchise, conference, conference_division
 		WHERE competition=" . $row['idCompetition'] . "
@@ -56,7 +61,8 @@
 			AND division_franchise.idFranchise=ID_EQUIPE
 			AND division_franchise.idDiv=division.idDiv
 			AND conference_division.idDiv=division.idDiv
-			AND conference_division.idConference=conference.idConf";
+			AND conference_division.idConference=conference.idConf
+			AND clmnt_apres_journee = " . $current_week;
 	
 	// Build end of request
 	$request = $request . " ORDER BY conf ASC, division ASC, CLMNT ASC";

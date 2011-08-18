@@ -20,14 +20,14 @@ function updateArticles(target, param) {
 	$.getJSON(url, function(data) {
 		// Store data
 		$(target).data('records', data);
-		
+
 		// Append each item
 		$.each(data, function(n) {
 			var html = '';
 			html += '<li><a href="#" data-index="'+n+'">';
-			html += '<img src="'+prefixImages+'thumb/'+this.image+'" style="position: absolute; left: 0px; top: 35px;" />';
+			html += '<img src="'+prefixImages+'thumb/'+this.image+'" style="position: absolute; left: 0px; top: 25px;"/>';
 			html += '<h3 style="position: absolute; left: 0px; top: -10px;">'+this.titre+'</h3>';
-			html += '<p style="margin-top: 12px; white-space: normal">'+this.resume+'</p>';
+			html += '<p  style="position: absolute; left: 0px; top: 10px; margin-top: 12px; margin-left: 95px; width: 230px; white-space: normal; ">'+this.resume+'</p>';
 			html += '</a></li>';
 			$(target).append(html);
 		});	
@@ -36,7 +36,7 @@ function updateArticles(target, param) {
 		$(target).listview("refresh");
 
 		// Hide page loading message
-		$.mobile.hidePageLoadingMsg();
+		$.mobile.hidePageLoadingMsg();		
 	})
 	
 	// Loading error

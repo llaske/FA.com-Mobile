@@ -48,8 +48,19 @@ function updateMatchs() {
 	// Remove all
 	$("#matchs").children().remove('li');
 	
-	// Append match
+	// No match
 	var records = $('#matchs').data('records');
+	if (records.length == 0) {
+		// Display message: no match yet
+		var html = '<p>Aucun match joué</p>';
+		$('#no_match').html(html);
+		
+		// Hide page loading message
+		$.mobile.hidePageLoadingMsg();
+		return;
+	}
+	
+	// Append match
 	$.each(records, function(n) {
 		var html = '';
 		if (n == 0 || records[n-1].journee != this.journee)

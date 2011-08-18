@@ -3,7 +3,7 @@
 	define("mysql_server", "localhost");
 	define("mysql_user", "root");
 	define("mysql_password", "");
-	define("mysql_database", "FAdotcome");
+	define("mysql_database", "FAdotcome2");
 	
 	// Image prefix
 	define("prefix_img_small", "http://www.footballamericain.com/images/thumb/");
@@ -12,6 +12,7 @@
 	
 	// Max constants
 	define("max_list_size", "12");
-	define("max_resume_size", 172);
+	define("max_resume_size", 100);
 	define("max_competition_days", 3);
+	define("force_season", "2010");
 ?>

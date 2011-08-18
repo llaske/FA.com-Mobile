@@ -29,9 +29,11 @@
 	connect_db();
 	
 	// Create request to get competition
-	// HACK: Force saison to 2010
-	$request = "SELECT idCompetition FROM competition 
-				WHERE saison='2010' AND ligue=" . $_GET['ligue'] . "	ORDER BY saison DESC LIMIT 0, 1";
+	$request = "SELECT idCompetition FROM competition WHERE "; 
+	$season = constant("force_season");
+	if (!empty($season))
+		$request = $request . "saison='" . $season ."' AND ";
+	$request = $request . "ligue=" . $_GET['ligue'] . "	ORDER BY saison DESC LIMIT 0, 1";
 
 	// Run query
 	$result = mysql_query($request);
@@ -53,7 +55,7 @@
 	$request = "SELECT idMatch, dateMatch, acroJournee, libJournee, idUsFootDom, idUsFootExt, score_d, score_e
 		FROM matchs LEFT JOIN journee AS j
 		ON matchs.journee = j.idJournee AND matchs.idCompetition = j.idCompetition
-		WHERE j.typeMatch<2 AND matchs.idCompetition=" . $row['idCompetition'];
+		WHERE dateMatch < CURRENT_DATE AND j.typeMatch<2 AND matchs.idCompetition=" . $row['idCompetition'];
 
 	// Filter on id
 	$filterid = false;
