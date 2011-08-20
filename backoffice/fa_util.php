@@ -30,7 +30,7 @@
 		return constant("prefix_img_medium") . $url;
 	}
 	
-	// Replace img tags by the equivalent URL
+	// Replace img tags and relative by a full URL
 	function subst_images($content) {
 		// Look for the "[img=" tag
 		$pos = stripos($content, "[img=");
@@ -50,6 +50,37 @@
 			$pos = stripos($content, "[img=");
 		}
 		
+		// Look for the "<a href=" tag
+		$pos = stripos($content, "<a href=");
+		while ($pos !== false) {
+			// Split after expression
+			$init = $pos;
+			$pos = $pos + 8;
+			$quote = $content[$pos];
+			$right = substr($content, $pos+1);
+			
+			// If starting by "http://", just add target
+			if (strncmp($right, "http://", 7) == 0) {
+				$content = substr($content, 0, $init) . "<a target='_new' href=" . $quote . $right;			
+			}
+			
+			// If not starting by "http://", add prefixe
+			else {
+				// Look for ending quote
+				$pos = $pos + 1;
+				$i = $pos;
+				while ($content[$i] != $quote) $i = $i + 1;
+				
+				// Strip starting /
+				if ($content[$pos] == '/') $pos = $pos + 1;
+				
+				// Add prefix
+				$content = substr($content, 0, $init) . "<a target='_new' href=" . $quote . constant("prefix_global") . substr($content, $pos);
+			}
+						
+			// Next tag
+			$pos = stripos($content, "<a href=", $pos);
+		}
 		return $content;
 	}
 	
