@@ -29,7 +29,7 @@
 	connect_db();
 	
 	// Create request to get competition
-	$request = "SELECT idCompetition FROM competition WHERE "; 
+	$request = "SELECT idCompetition, current_week FROM competition WHERE "; 
 	$season = constant("force_season");
 	if (!empty($season))
 		$request = $request . "saison='" . $season ."' AND ";
@@ -51,11 +51,21 @@
 		return;
 	}
 	
+	// Compute current week
+	$current_week = $row['current_week'];
+	if ($current_week <= 0) {
+		$start_week = 22 - constant("max_competition_days");
+		$end_week = 22;
+	} else {
+		$start_week = max($current_week - constant("max_competition_days") - 2, 1);
+		$end_week = min($current_week + 1, 22);
+	}
+
 	// Create base request
-	$request = "SELECT idMatch, dateMatch, acroJournee, libJournee, idUsFootDom, idUsFootExt, score_d, score_e
+	$request = "SELECT idMatch, dateMatch, heureMatch, acroJournee, journee, libJournee, idUsFootDom, idUsFootExt, score_d, score_e
 		FROM matchs LEFT JOIN journee AS j
 		ON matchs.journee = j.idJournee AND matchs.idCompetition = j.idCompetition
-		WHERE dateMatch < CURRENT_DATE AND j.typeMatch<2 AND matchs.idCompetition=" . $row['idCompetition'];
+		WHERE j.typeMatch<2 AND matchs.idCompetition=" . $row['idCompetition'];
 
 	// Filter on id
 	$filterid = false;
@@ -82,7 +92,6 @@
 
 	// Loop on each match
 	$i = 0;
-	$journee = "";
 	$numdays = 0;
 	while ($row = mysql_fetch_array($result)) {
 		// Convert to object
@@ -91,6 +100,7 @@
 		$match->acrojournee = $row['acroJournee'];
 		$match->journee = $row['libJournee'];
 		$match->date = $row['dateMatch'];
+		$match->heure = $row['heureMatch'];
 		$match->equipedom = $row['idUsFootDom'];
 		$match->equipeext = $row['idUsFootExt'];
 		$match->scoredom = $row['score_d'];
@@ -98,15 +108,9 @@
 		
 		// If not filter on a team, stop to N last days of the competition
 		if (!$teamfilter) {
-			if ($numdays == 0) {
-				$journee = $match->journee;
-				$numdays = 1;
-			} else if ($journee != $match->journee) {
-				$journee = $match->journee;
-				$numdays = $numdays + 1;
-				if ($numdays > constant("max_competition_days"))
-					break;
-			}
+			$journee = $row['journee'];
+			if ($journee < $start_week || $journee > $end_week)
+				continue;
 		}
 		
 		// Store in array

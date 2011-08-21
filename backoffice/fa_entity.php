@@ -22,6 +22,7 @@
 		public $acrojournee;
 		public $journee;
 		public $date;
+		public $heure;
 		public $equipedom;
 		public $equipeext;
 		public $scoredom;

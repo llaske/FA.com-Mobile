@@ -107,6 +107,7 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 					var place;
 					var opponent;
 					var score;
+					var scorestring;
 					var opponentscore;
 					if ( this.equipedom == team.id ) {
 						place = 'vs ';
@@ -126,12 +127,20 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 						result = ' D ';
 						theme = 'c';
 					}
+					if (this.scoredom != null && this.scoreext != null) {
+						scorestring = this.scoredom + '-' + this.scoreext;
+					} else {
+						result = ' ';
+						var dateParts = this.date.split("-");
+						var date = new Date(dateParts[0], parseFloat(dateParts[1])-1, parseFloat(dateParts[2]));
+						scorestring = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear();					
+					}
 					
 					// Append line
 					var html = '';
 					var teamopp = TeamCache.getTeam(opponent);
 					html += '<li data-theme="'+theme+'"><a href="#" data-index="'+n+'">';				
-					html += '<p>'+this.acrojournee + ': ' + result + place + teamopp.nom + ', <strong>'+ this.scoredom + '-' + this.scoreext+'</strong></p>';
+					html += '<p>'+this.acrojournee + ': ' + result + place + teamopp.nom + ', <strong>'+ scorestring +'</strong></p>';
 					html += '</a></li>';
 					$('#matchs_equipe').append(html);
 				});	

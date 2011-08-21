@@ -52,7 +52,7 @@ function updateMatchs() {
 	var records = $('#matchs').data('records');
 	if (records.length == 0) {
 		// Display message: no match yet
-		var html = '<p>Aucun match joué</p>';
+		var html = '<p>Aucun match</p>';
 		$('#no_match').html(html);
 		
 		// Hide page loading message
@@ -62,13 +62,31 @@ function updateMatchs() {
 	
 	// Append match
 	$.each(records, function(n) {
+		// Display team dom
 		var html = '';
 		if (n == 0 || records[n-1].journee != this.journee)
 			html += '<li data-role="list-divider">'+this.journee+'</li>';
 		html += '<li ><a href="#" data-index="'+n+'">';
 		html += '<img  src="'+prefixImages+'images/team/100/'+TeamCache.getTeam(this.equipedom).image+'" class="ui-li-icon" style="top: 0px; width: 30px;max-height: 40px"/>';
 		html += '<p style="position: absolute; left: 45px; top: 10;max-height: 40px">'+TeamCache.getTeam(this.equipedom).nom+'</p>';
-		html += '<p style="position: absolute; left: 120px; top: 10;max-height: 40px"><strong>'+this.scoredom+' - '+this.scoreext+'</strong></p>';		
+		
+		// Display score or date match
+		if (this.scoredom != null && this.scoreext != null) {
+			// Display score
+			html += '<p style="position: absolute; left: 120px; top: 10;max-height: 40px"><strong>'+this.scoredom+' - '+this.scoreext+'</strong></p>';
+		} else {
+			// Get date and time
+			var dateParts = this.date.split("-");
+			var dayNames = new Array("Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
+			var date = new Date(dateParts[0], parseFloat(dateParts[1])-1, parseFloat(dateParts[2]));
+			var timeParts = this.heure.split(":");
+			
+			// Display date
+			html += '<p style="position: absolute; left: 120px; top: 10;max-height: 40px"><strong>'+dayNames[date.getDay()]+'</strong></p>';
+			html += '<p style="position: absolute; left: 100px; top: 30px;max-height: 20px"><strong>'+date.getDate()+'/'+(date.getMonth()+1)+' - '+timeParts[0]+'h'+timeParts[1]+'</strong></p>';
+		}
+		
+		// Display team ext
 		html += '<p style="position: absolute; left: 200px; top: 10;max-height: 40px">'+TeamCache.getTeam(this.equipeext).nom+'</p>';		
 		html += '<img  src="'+prefixImages+'images/team/100/'+TeamCache.getTeam(this.equipeext).image+'" style="position: absolute; left: 260px; top: 0; width: 30px;max-height: 40px"/>';		
 		html += "</a></li>";		
@@ -120,12 +138,23 @@ $('#pg_match_detail').live('pageshow', function(event, ui) {
 	var url = prefixBackoffice+'fa_matchs_scores.php?id='+match.id;
 	
 	// Launch ajax request
-	$.getJSON(url, function(data) {
+	$.getJSON(url, function(data) {			
 		// Display score
 		var html = '';
 		html += '<img  src="'+prefixImages+'images/team/100/'+teamdom.image+'" style="position: absolute; left: 70px; top: 55px; width: 30px"/>';
 		html += '<a href="#" id="teamdom" style="position: absolute; left: 50px; top: 80px">'+teamdom.nom+'</a>';
-		html += '<p style="position: absolute; left: 130px; top: 60px"><strong>'+match.scoredom+' - '+match.scoreext+'</strong></p>';		
+		if (match.scoredom != null && match.scoreext != null) {
+			html += '<p style="position: absolute; left: 130px; top: 60px"><strong>'+match.scoredom+' - '+match.scoreext+'</strong></p>';
+		} else {
+			// Get date and time
+			var dateParts = match.date.split("-");
+			var dayNames = new Array("Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
+			var date = new Date(dateParts[0], parseFloat(dateParts[1])-1, parseFloat(dateParts[2]));
+			var timeParts = match.heure.split(":");
+			
+			// Display date
+			html += '<p style="position: absolute; left: 110px; top: 225px;max-height: 40px"><strong>'+dayNames[date.getDay()]+' '+date.getDate()+'/'+(date.getMonth()+1)+' - '+timeParts[0]+'h'+timeParts[1]+'</strong></p>';
+		}
 		html += '<a href="#" id="teamext" style="position: absolute; left: 210px; top: 80px">'+teamext.nom+'</a>';		
 		html += '<img  src="'+prefixImages+'images/team/100/'+teamext.image+'" style="position: absolute; left: 230px; top: 55px; width: 30px"/>';	
 		html += '<p style="position: absolute; left: 5px; top: 140px">'+teamdom.nom+'</p>';	
@@ -133,14 +162,14 @@ $('#pg_match_detail').live('pageshow', function(event, ui) {
 		$('#score').html(html);
 		
 		// Display detail score
-		$('#qt1_dom').html(data.qt1_dom);
-		$('#qt2_dom').html(data.qt2_dom);
-		$('#qt3_dom').html(data.qt3_dom);		
-		$('#qt4_dom').html(data.qt4_dom);
-		$('#qt1_ext').html(data.qt1_ext);
-		$('#qt2_ext').html(data.qt2_ext);
-		$('#qt3_ext').html(data.qt3_ext);		
-		$('#qt4_ext').html(data.qt4_ext);
+		$('#qt1_dom').html(match.scoredom != null ? data.qt1_dom : "&nbsp;");
+		$('#qt2_dom').html(match.scoredom != null ? data.qt2_dom : "&nbsp;");
+		$('#qt3_dom').html(match.scoredom != null ? data.qt3_dom : "&nbsp;");		
+		$('#qt4_dom').html(match.scoredom != null ? data.qt4_dom : "&nbsp;");
+		$('#qt1_ext').html(match.scoreext != null ? data.qt1_ext : "&nbsp;");
+		$('#qt2_ext').html(match.scoreext != null ? data.qt2_ext : "&nbsp;");
+		$('#qt3_ext').html(match.scoreext != null ? data.qt3_ext : "&nbsp;");		
+		$('#qt4_ext').html(match.scoreext != null ? data.qt4_ext : "&nbsp;");		
 	})
 	
 	// Loading error
