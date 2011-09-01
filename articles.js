@@ -15,12 +15,12 @@ function updateArticles(target, param) {
 		else if (param.team != null)
 			url += '?equipe=' + param.team;
 	}
-	
+
 	// Launch ajax request
 	$.getJSON(url, function(data) {
 		// Store data
 		$(target).data('records', data);
-
+	
 		// Append each item
 		$.each(data, function(n) {
 			var html = '';

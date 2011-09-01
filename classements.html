@@ -5,6 +5,8 @@
   <link rel="stylesheet" href="framework/jquery.mobile-1.0b1.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <script src="framework/jquery-1.6.2.min.js"></script>
+  <script src="framework/jquery.cookie.js"></script>    
+  <script src="preinit.js"></script>    
   <script src="framework/jquery.mobile-1.0b1.min.js"></script>
   <script src="preferences.js"></script>
   <script src="history.js"></script>  
@@ -32,10 +34,10 @@
 	</div>
   </div>
   
-  <div data-role="footer" data-position="fixed">
-    <a href="index.html" data-role="button" id="btnArticles">Articles</a>
-    <a href="matchs.html" data-role="button" id="btnScores">Scores</a>
-    <a href="classements.html" data-role="button" id="btnClassements">Classements</a>
+  <div data-role="footer">
+    <a href="index.html" data-role="button" id="btnArticles" rel="external">Articles</a>
+    <a href="matchs.html" data-role="button" id="btnScores" rel="external">Scores</a>
+    <a href="classements.html" data-role="button" id="btnClassements" rel="external">Classements</a>
     <a href="filtrer.html" data-icon="gear" data-role="button" id="btnFiltrer">Filtrer</a>	
   </div>  
 </div>

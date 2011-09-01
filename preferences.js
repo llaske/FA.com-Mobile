@@ -22,9 +22,9 @@ $("[data-role='page']").live('pagebeforecreate',function(event){
 Preferences = {};
 
 // Filter preference value
-Preferences.nfl = true;
-Preferences.ncaa = true;
-Preferences.elite = true;
+Preferences.nfl = ($.cookie('fa_nfl')==null?true:$.cookie('fa_nfl')=="true");
+Preferences.ncaa = ($.cookie('fa_ncaa')==null?true:$.cookie('fa_ncaa')=="true");
+Preferences.elite = ($.cookie('fa_elite')==null?true:$.cookie('fa_elite')=="true");
 
 // Build the param url to filter using ligue
 Preferences.getLigues = function() {
@@ -69,8 +69,11 @@ $('#pg_filtrer').live('pageshow', function(event, ui) {
 // Hide page, get new preferences
 $('#pg_filtrer').live('pagehide', function(event, ui) {
 	Preferences.nfl = ($('#nfl').val() == 'on');
+	$.cookie('fa_nfl', Preferences.nfl, { path: '/' });
 	Preferences.ncaa = ($('#ncaa').val() == 'on');
+	$.cookie('fa_ncaa', Preferences.ncaa, { path: '/' });	
 	Preferences.elite = ($('#elite').val() == 'on');
+	$.cookie('fa_elite', Preferences.elite, { path: '/' });	
 });
 
 
