@@ -17,22 +17,10 @@
 	// Connect to database
 	connect_db();
 
-	// Create request
-	$request = "SELECT idRedaction, corps 
-	            FROM redaction";
-
 	// Filter on id
-	if(isset($_GET['id'])&&!empty($_GET['id']))
-	{
-		$request = $request . " WHERE  idRedaction = " . $_GET['id'];
-	}
-
-	// Order and limit
-	$request = $request . " ORDER BY publication DESC ";
-	$request = $request . " LIMIT 0, 1";
-
-	// Run query
-	$result = mysql_query($request);
+	$idRedaction = (isset($_GET['id'])&&!empty($_GET['id'])) ? $_GET['id'] : null ;
+	
+	$result = x_RedactionSectionSelect(null,null,null,null,$idRedaction);
 
 	// Get article
 	if ($row = mysql_fetch_array($result)) {
@@ -46,10 +34,4 @@
 		$article = null;
 	}
 	echo json_encode($article);
-
-	// Free result and close connection
-	mysql_free_result($result);
-	
-	// Close database
-	close_db();
 ?>

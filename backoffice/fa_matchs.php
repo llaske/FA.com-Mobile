@@ -29,25 +29,14 @@
 	connect_db();
 	
 	// Create request to get competition
-	$request = "SELECT idCompetition, current_week FROM competition WHERE "; 
 	$season = constant("force_season");
-	if (!empty($season))
-		$request = $request . "saison='" . $season ."' AND ";
-	$request = $request . "ligue=" . $_GET['ligue'] . "	ORDER BY saison DESC LIMIT 0, 1";
-
-	// Run query
-	$result = mysql_query($request);
+	$row = getCompetitionInfo($_GET['ligue'],$season) ;
 
 	// Get last competition
-	if (!($row = mysql_fetch_array($result))) {
+	if (is_null($row)) {
 		// Competition not found, stop
 		echo json_encode($matchs);
-		
-		// Free result and close connection
-		mysql_free_result($result);
-		
-		// Close database
-		close_db();		
+
 		return;
 	}
 	
@@ -62,34 +51,32 @@
 	}
 
 	// Create base request
-	$request = "SELECT idMatch, dateMatch, heureMatch, acroJournee, journee, libJournee, idUsFootDom, idUsFootExt, score_d, score_e
+	/*$request = "SELECT idMatch, dateMatch, heureMatch, acroJournee, journee, libJournee, idUsFootDom, idUsFootExt, score_d, score_e
 		FROM matchs LEFT JOIN journee AS j
 		ON matchs.journee = j.idJournee AND matchs.idCompetition = j.idCompetition
-		WHERE j.typeMatch<2 AND matchs.idCompetition=" . $row['idCompetition'];
-
+		WHERE j.typeMatch<2 AND matchs.idCompetition=" . $row['idCompetition'];*/
+	
+	$result = null ;
+	
 	// Filter on id
 	$filterid = false;
+	$teamfilter = false;
+	
 	if(isset($_GET['id'])&&!empty($_GET['id']))
 	{
-		$request = $request . " AND idMatch = " . $_GET['id'];
+		$result = getMatchsInfo(null,null,null,$_GET['id'],"<2","DESC") ;
 		$filterid = true;
 	}	
-	
-	// Filter on team
-	$teamfilter = false;
-	if(isset($_GET['equipe'])&&!empty($_GET['equipe']))
+	elseif(isset($_GET['equipe'])&&!empty($_GET['equipe'])) // Filter on team
 	{
 		$teamfilter = true;
-		$request = $request . "	AND (idUsFootDom=" . $_GET['equipe'] . "
-			OR idUSFootExt=" . $_GET['equipe'] . ")";
+		$result = getMatchsInfo($row['idCompetition'],null,$_GET['equipe'],null,"<2","DESC") ;
 	}	
+	else //No Filter, automatic filter on competition
+	{
+		$result = getMatchsInfo($row['idCompetition'],null,null,null,"<2","DESC") ;
+	}
 	
-	// Build end of request
-	$request = $request . " ORDER BY dateMatch DESC";
-	
-	// Run query
-	$result = mysql_query($request);
-
 	// Loop on each match
 	$i = 0;
 	$numdays = 0;
@@ -129,8 +116,8 @@
 		echo json_encode($matchs);
 
 	// Free result and close connection
-	mysql_free_result($result);
+	//mysql_free_result($result);
 	
 	// Close database
-	close_db();
+	//close_db();
 ?>

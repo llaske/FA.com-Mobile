@@ -17,22 +17,10 @@
 	// Connect to database
 	connect_db();
 
-	// Create request
-	$request = "SELECT idMatch, qt1_d, qt2_d, qt3_d, qt4_d, qt1_e, qt2_e, qt3_e, qt4_e
-			FROM matchs";
-
 	// Filter on id
-	if(isset($_GET['id'])&&!empty($_GET['id']))
-	{
-		$request = $request . " WHERE  idMatch = " . $_GET['id'];
-	}
-
-	// Order and limit
-	$request = $request . " ORDER BY dateMatch DESC ";
-	$request = $request . " LIMIT 0, 1";
-
-	// Run query
-	$result = mysql_query($request);
+	$idMatch = isset($_GET['id']) && !empty($_GET['id']) ? $_GET['id'] : null ;
+	
+	$result = getMatchsInfo(null,null,null,$idMatch) ;
 
 	// Get match
 	if ($row = mysql_fetch_array($result)) {
@@ -53,10 +41,4 @@
 		$match = null;
 	}
 	echo json_encode($match);
-
-	// Free result and close connection
-	mysql_free_result($result);
-	
-	// Close database
-	close_db();
 ?>
