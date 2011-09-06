@@ -28,25 +28,14 @@
 	connect_db();
 	
 	// Create request to get competition
-	$request = "SELECT idCompetition, current_week FROM competition WHERE "; 
 	$season = constant("force_season");
-	if (!empty($season))
-		$request = $request . "saison='" . $season ."' AND ";
-	$request = $request . "ligue=" . $_GET['ligue'] . "	ORDER BY saison DESC LIMIT 0, 1";
+	$row = getCompetitionInfo($_GET['ligue'],$season) ;
 
-	// Run query
-	$result = mysql_query($request);
-	
 	// Get last competition
-	if (!($row = mysql_fetch_array($result))) {
+	if (is_null($row)) {
 		// Competition not found, stop
 		echo json_encode($classements);
-		
-		// Free result and close connection
-		mysql_free_result($result);
-		
-		// Close database
-		close_db();		
+
 		return;
 	}
 
@@ -54,6 +43,7 @@
 	$current_week = $row['current_week'];
 	if ($current_week <= 0) 
 		$current_week = 17;	
+		
 	$request = "SELECT ID_EQUIPE, franchise, conf, CLMNT_CONF, division, CLMNT, playoffs, G, N, P, PP, PC
 		FROM standings, franchise, division, division_franchise, conference, conference_division
 		WHERE competition=" . $row['idCompetition'] . "
@@ -87,7 +77,7 @@
 		$classement->p = $row['P'];
 		$classement->pf = $row['PP'];
 		$classement->pa = $row['PC'];		
-		$classement->pct = $classement->g/($classement->g+$classement->p);
+		$classement->pct = round($classement->g/($classement->g+$classement->p)*100,2) ;
 		
 		// Store in array
 		$classements[$i] = $classement;
@@ -96,10 +86,4 @@
 
 	// Return JSON for all classements
 	echo json_encode($classements);
-
-	// Free result and close connection
-	mysql_free_result($result);
-	
-	// Close database
-	close_db();
 ?>
