@@ -18,20 +18,19 @@
 	// Connect to database
 	connect_db();
 
-	// Create request
-	$request = "SELECT idUsfoot, franchise, franchise2, concat(acronyme, '-logo.jpg'), franchiseadd, siteofficiel
-			FROM franchise";
+// Create request
+//	$request = "SELECT idUsfoot, franchise, franchise2, concat(acronyme, '-logo.jpg'), franchiseadd, siteofficiel
+	//		FROM franchise";
 
 	// Filter on id
 	$filterid = false;	
 	if(isset($_GET['id'])&&!empty($_GET['id']))
 	{
-		$request = $request . " WHERE  idUsfoot = " . $_GET['id'];
+		$iFranchise = $_GET['id'];
 		$filterid = true;		
 	}
-
-	// Run query
-	$result = mysql_query($request);
+	
+	$result = getFranchiseInfo($iFranchise) ;
 
 	// Create array
 	$equipes = array();
@@ -44,7 +43,7 @@
 		$equipe->id = $row['idUsfoot'];
 		$equipe->nom = $row['franchise'];	
 		$equipe->ville = $row['franchise2'];
-		$equipe->image = $row[3];		
+		$equipe->image = $row['acronyme'] . "-logo.jpg";		
 		$equipe->creation = $row['franchiseadd'];
 		$equipe->web = $row['siteofficiel'];
 		$equipes[$i] = $equipe;
@@ -62,8 +61,8 @@
 		echo json_encode($equipes);
 
 	// Free result and close connection
-	mysql_free_result($result);
+	//mysql_free_result($result);
 	
 	// Close database
-	close_db();
+	//close_db();
 ?>

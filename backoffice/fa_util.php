@@ -114,4 +114,139 @@
 		
 		return $content;
 	}
+	
+	//SQL Exec
+	function sql_exec($sReqSql)
+	{
+		return mysql_query($sReqSql) ;
+	}
+	
+	function sql_numrows($oRes)
+	{
+		return mysql_num_rows($oRes) ;
+	}
+	
+	//Format SQL DateTime
+	function getDateTimeFromDateTimeSQL($datetimesql,$format)
+	{
+		if ( preg_match( "/([0-9]{4})-([0-9]{1,2})-([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})/", $datetimesql, $regs ) )
+		{
+			//$regs : 0-ALL, 1-Y, 2-m, 3-d, 4-h, 5-m, 6-s
+			//mktime (HEURE , MIN, SEC, MOIS, JOUR, ANNEE)
+			$timestamp = mktime($regs[4],$regs[5],$regs[6],$regs[2],$regs[3],$regs[1]) ;
+			$sDayExtract = $regs[3] ;
+			$sMonthExtract = $regs[2] ;		
+			$sYearExtract = $regs[1] ;
+	
+			$sHourExtract= $regs[4] ;
+			$sMinExtract = $regs[5] ;
+			//useless $sSecExtract = $regs[6] ;		
+			
+			$sDateTime = date($format, $timestamp) ;
+			
+			return $sDateTime ;
+		}
+		else
+			echo ("Format de date invalide : $datetimesql") ;
+	}
+	
+/**
+ * Construit une requête SQL $sSqlRequest en renseignant dynamiquement la clause Where
+ * Intérêt : la req sera construite en fonction de la validité des paramètres passés.
+ * 		on appelle cette fonction et elle se charge du reste
+ * Note : n'exécute pas la requête !
+ *
+ * @param string $sSqlRequest (la req avec %s à l'endroit où la clause Where sera placée)
+ * @param array 2D $tWhereParameters (tableau 2D contenant la liste des paramètres à tester. Pour chaque param on a :
+ * 		value=valeur à tester
+ * 		test=type de test (NOT_NULL, NOT_EMPTY...)
+ * 		request=la chaine à évaluer (toto=$s) ATTENTION : si une chaine en LIKE est à tester, il faut échapper %s : LIKE '%%%s%%'
+ * 		parenthesis=bool expliquant s'il faut mettre une parenthèse
+ * 		logical=string : "AND" ou "OR"
+ * @return string la requête
+ */
+define("NOT_NULL",2) ;
+define("NOT_EMPTY",6) ; // chaine != ''
+define("NOT_ZERO",7) ; // !=0
+define("JOINTURE",8) ; // pas de test, on a une jointure. Utilse dans la fonction sqlSearchEngine()
+
+function sqlSearchEngine($sSqlRequest,$tWhereParameters)
+{
+	$tWhereClause = array();
+	$sWhereClause = "" ;
+	
+	if (count($tWhereParameters)>0) //on a un paramètre à analyser
+	{
+		foreach($tWhereParameters as $param)
+		{
+			//foreach($tParameters as $param)
+			//{
+				if ($param["test"]==NOT_NULL && !is_null($param['value'])) $bIsWhereClauseValid=true ;	//le paramètre ne doit pas valoir NULL
+				elseif ($param['test']==NOT_EMPTY && $param['value']!="") $bIsWhereClauseValid=true ;	//le paramètre ne doit pas valoir ""
+				elseif ($param['test']==NOT_ZERO && $param['value']!=0) $bIsWhereClauseValid=true ; 	//le paramètre ne doit pas valoir 0 
+				elseif ($param['test']==JOINTURE) $bIsWhereClauseValid=true ; 							//on a une jointure == rien à tester
+				else $bIsWhereClauseValid=false ;
+
+				if ($bIsWhereClauseValid)
+				{
+					if ($param['test']==JOINTURE)
+						$sRequest = $param['request'];
+					else
+						$sRequest = sprintf($param['request'],$param['value']) ;
+					
+					array_push($tWhereClause,array("request"=>$sRequest,"isParenthesis"=>$param['parenthesis'],"logicalBeforeIfExist"=>$param['logical'])) ;
+				}
+			//}
+		}
+	}
+	//Moteur de création de la clause Where
+	if (count($tWhereClause)>0)
+	{
+		$sWhereClause .= " WHERE " ;
+		$loop_one=true ;
+		$bParenthesisOpened = false ;
+		
+		foreach($tWhereClause as $clause)
+		{
+			if ($clause['isParenthesis']==true)
+			{	
+				if ($bParenthesisOpened == false)
+				{
+					$sWhereClause .= "(" ;
+					$bParenthesisOpened = true;	
+				}
+				else
+				{
+					//DO NOTHING
+				}
+				
+			}
+			elseif ($clause['isParenthesis']==false && $bParenthesisOpened == true)
+			{
+				$sWhereClause .= ")" ;
+				$bParenthesisOpened = false;
+			}
+			else
+			{
+				//DO NOTHING
+			}
+			
+			$sWhereClause .= !$loop_one ? " ".$clause['logicalBeforeIfExist']." " : "" ;
+			
+			$sWhereClause .= $clause['request'] ;
+			
+			if ($loop_one) $loop_one=false ;
+		}	
+		
+		//on ferme une éventuelle parenthèse
+		if ($bParenthesisOpened) $sWhereClause .= ")" ;			
+	}
+	
+	$req = sprintf($sSqlRequest,$sWhereClause);
+
+	return $req ;
+	
+}
+	
+	
 ?>

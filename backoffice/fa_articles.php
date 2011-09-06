@@ -19,60 +19,45 @@
 	connect_db();
 	
 	// Create request
-	$request = "SELECT idRedaction, titre1, titre2, initiales, concat(dossier,'/',nomImage), corps,
-				DATE_FORMAT(publication, '%d/%m/%Y à %k:%i:%s')
-	            FROM auteur AS a, redaction AS r LEFT JOIN image AS i ON r.idMainImage = i.idImage  WHERE r.auteur = a.idAuteur";
+//	$request = "SELECT idRedaction, titre1, titre2, initiales, concat(dossier,'/',nomImage), corps, DATE_FORMAT(publication, '%d/%m/%Y à %k:%i:%s')
+//	            FROM auteur AS a, redaction AS r LEFT JOIN image AS i ON r.idMainImage = i.idImage
+//	            WHERE r.auteur = a.idAuteur";
 
+	$iPagerSpan = "0," . constant("max_list_size");
+	$result = null ;
+	
 	// Filter on id
 	$filterid = false;
 	if(isset($_GET['id'])&&!empty($_GET['id']))
 	{
-		$request = $request . " AND idRedaction = " . $_GET['id'];
+		$result = x_RedactionSectionSelect(null,null,null,null,$_GET['id'],$iPagerSpan,false,false,NEWS_NO) ;
 		$filterid = true;
 	}
 	
 	// Filter on team
 	if(isset($_GET['equipe'])&&!empty($_GET['equipe']))
 	{
-		$request = $request . " AND idRedaction IN (
-			SELECT idRedaction
-			FROM x_redaction_section, section
-			WHERE 
-				x_redaction_section.idSection = section.idS
-				AND section.idSG = 1
-				AND section.idLink = " . $_GET['equipe'] . ") ";
+		$result = x_RedactionSectionSelect(null,FRANCHISE,$_GET['equipe'],null,null,$iPagerSpan,false,false,NEWS_NO) ;
 	}
 
 	// Filter on ligue
 	if(isset($_GET['ligue'])&&!empty($_GET['ligue']))
 	{
-		$request = $request . " AND idRedaction IN (
-			SELECT idRedaction
-			FROM x_redaction_section, section
-			WHERE 
-				x_redaction_section.idSection = section.idS
-				AND section.idSG = 2
-				AND section.idLink IN (" . $_GET['ligue'] . ")) ";
+		$result = x_RedactionSectionSelect(null,LIGUE,null,null,null,$iPagerSpan,false,false,NEWS_NO) ; //toute les ligues $_GET['ligue']
 	}
 
 	// Filter on match
 	if(isset($_GET['match'])&&!empty($_GET['match']))
 	{
-		$request = $request . " AND idRedaction IN (
-			SELECT idRedaction
-			FROM x_redaction_section, section
-			WHERE 
-				x_redaction_section.idSection = section.idS
-				AND section.idSG = 8
-				AND section.idLink = " . $_GET['match'] . ") ";
+		$result = x_RedactionSectionSelect(null,MATCH,$_GET['match'],null,null,$iPagerSpan,false,false,NEWS_NO) ;
 	}
 
 	// Order and limit
-	$request = $request . " ORDER BY publication DESC ";
-	$request = $request . " LIMIT 0, " .  constant("max_list_size");
+	///$request = $request . " ORDER BY publication DESC ";
+	//$request = $request . " LIMIT 0, " .  constant("max_list_size");
 
 	// Run query
-	$result = mysql_query($request);
+	//$result = mysql_query($request);
 
 	// Create array
 	$articles = array();
@@ -80,18 +65,22 @@
 
 	// Loop on each article
 	while ($row = mysql_fetch_array($result)) {
+		
+		//Get Image path (image linked to article if exist. main image of the section if not)
+		list($sPathImage,$sPathThumb,$sPathSlider,$sCommentaire) = getImagePathAndThumbPathFromRedaction($row) ;
+		
 		// Get section image if image is null
-		if ($row[4] == null) {
-			// Build request
-			$imagereq = "SELECT concat(dossier,'/',nomImage) FROM x_redaction_section, section, image WHERE idS=mainSection AND mainImageIdS=idImage AND idRedaction=" . $row['idRedaction'];
-			
-			// Run query
-			$imageres = mysql_query($imagereq);
-			if ($imgrow = mysql_fetch_array($imageres)) {
-				$row[4] = $imgrow[0];	
-			}
-			mysql_free_result($imageres);
-		}
+//		if ($row[4] == null) {
+//			// Build request
+//			$imagereq = "SELECT concat(dossier,'/',nomImage) FROM x_redaction_section, section, image WHERE idS=mainSection AND mainImageIdS=idImage AND idRedaction=" . $row['idRedaction'];
+//			
+//			// Run query
+//			$imageres = mysql_query($imagereq);
+//			if ($imgrow = mysql_fetch_array($imageres)) {
+//				$row[4] = $imgrow[0];	
+//			}
+//			mysql_free_result($imageres);
+//		}
 		
 		// Convert to object
 		$article = new Article();  
@@ -99,9 +88,10 @@
 		$article->titre = decode_html(utf8_encode($row['titre1']));
 		$article->soustitre = decode_html(utf8_encode($row['titre2']));
 		$article->auteur = $row['initiales'];
-		$article->image = $row[4]; 
-		$article->resume = decode_html(utf8_encode(clean_resume($row[5])));
-		$article->date = utf8_encode($row[6]);
+		$article->image = $sPathThumb ; //$row[4];
+		$article->imagemedium = $sPathSlider ;
+		$article->resume = decode_html(utf8_encode(clean_resume($row['corps'])));
+		$article->date = utf8_encode(getDateTimeFromDateTimeSQL($row['publication'],'d/m/Y à H:i'));
 		$articles[$i] = $article;
 		$i = $i + 1;
 	}
@@ -117,8 +107,8 @@
 		echo json_encode($articles);
 
 	// Free result and close connection
-	mysql_free_result($result);
+	//mysql_free_result($result);
 	
 	// Close database
-	close_db();
+	//close_db();
 ?>

@@ -25,7 +25,7 @@ function updateArticles(target, param) {
 		$.each(data, function(n) {
 			var html = '';
 			html += '<li><a href="#" data-index="'+n+'">';
-			html += '<img src="'+prefixImages+'thumb/'+this.image+'" style="position: absolute; left: 0px; top: 25px;"/>';
+			html += '<img src="'+this.image+'" style="position: absolute; left: 0px; top: 25px;"/>';
 			html += '<h3 style="position: absolute; left: 0px; top: -10px;">'+this.titre+'</h3>';
 			html += '<p  style="position: absolute; left: 0px; top: 10px; margin-top: 12px; margin-left: 95px; width: 230px; white-space: normal; ">'+this.resume+'</p>';
 			html += '</a></li>';
@@ -90,7 +90,7 @@ $('#pg_detail_article').live('pageshow', function(event, ui) {
 		html += '<h2><font style: "color: red;">'+param.titre+'</font></h2>';
 		html += '<h3>'+param.soustitre+'</h3>';
 		html += '<h6>le '+param.date+' par '+param.auteur+'</h6>';
-		html += '<img src="'+prefixImages+'newsslider/'+param.image+'"/>';
+		html += '<img src="'+param.imagemedium+'"/>';
 		html += data.corps;
 		$('#article').html(html);
 	  
