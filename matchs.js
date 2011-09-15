@@ -116,7 +116,7 @@ $('ul[id="matchs"] a').live('vclick', function(event, ui) {
 	var record = $('#matchs').data("records")[n];
 	
 	// Push in history and change page
-	History.push('Matchs', {match: record, teamdom: TeamCache.getTeam(record.equipedom), teamext: TeamCache.getTeam(record.equipeext)});
+	History.push('matchs.html', {match: record, teamdom: TeamCache.getTeam(record.equipedom), teamext: TeamCache.getTeam(record.equipeext)});
     $.mobile.changePage("match_detail.html");
 });
 
@@ -130,11 +130,11 @@ $('#pg_match_detail').live('pageshow', function(event, ui) {
 	$.mobile.showPageLoadingMsg();
 	
 	// Build url to get score
-	var pop = History.pop();
-	var match = pop.param.match;
-	var teamdom = pop.param.teamdom;
-	var teamext = pop.param.teamext;
-	$('#match').data('param', pop.param);	
+	var param = History.getParam();
+	var match = param.match;
+	var teamdom = param.teamdom;
+	var teamext = param.teamext;
+	$('#match').data('param', param);	
 	var url = prefixBackoffice+'fa_matchs_scores.php?id='+match.id;
 	
 	// Launch ajax request
@@ -192,8 +192,8 @@ $('ul[id="articles_match"] a').live('vclick', function(event, ui) {
 	var record = $('#articles_match').data("records")[n];
 	
 	// Push in history and change page
-	History.push('Match', $('#match').data('param'));	// HACK: Push match context to go back here
-	History.push('Articles', record);	
+	History.push('matchs.html', $('#match').data('param'));	// HACK: Push match context to go back here
+	History.push('match_detail.html', record);	
     $.mobile.changePage("article_detail.html");
 });
 
@@ -204,8 +204,7 @@ $('#pg_match_detail > #match > #score > #teamdom').live('vclick', function(event
 	var teamdom = param.teamdom;
 	
 	// Push in history and change page
-	History.push('Match', $('#match').data('param'));	// HACK: Push match context to go back here
-	History.push('Team', teamdom);
+	History.push('match_detail.html', teamdom);
     $.mobile.changePage("equipe.html");
 });
 $('#pg_match_detail > #match > #score > #teamext').live('vclick', function(event, ui) {
@@ -214,7 +213,6 @@ $('#pg_match_detail > #match > #score > #teamext').live('vclick', function(event
 	var teamext = param.teamext;
 	
 	// Push in history and change page
-	History.push('Match', $('#match').data('param'));	// HACK: Push match context to go back here
-	History.push('Team', teamext);
+	History.push('match_detail.html', teamext);
     $.mobile.changePage("equipe.html");
 });

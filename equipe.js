@@ -61,8 +61,8 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 	$.mobile.showPageLoadingMsg();
 	
 	// Display information about team
-	var pop = History.pop();
-	var team = pop.param;
+	var param = History.getParam();
+	var team = param;
 	$('#team').data('team', team);	
 	$('#team > #nom').html(team.ville + ' ' +team.nom);
 	var html = '';
@@ -179,8 +179,7 @@ $('ul[id="articles_equipe"] a').live('vclick', function(event, ui) {
 	
 	// Push in history and change page
 	var team = $('#team').data('team');
-	History.push('Team', team);	// HACK: Push team context to go back here
-	History.push('Articles', record);	
+	History.push('equipe.html', record);	
     $.mobile.changePage("article_detail.html");
 });
 
@@ -192,7 +191,6 @@ $('ul[id="matchs_equipe"] a').live('vclick', function(event, ui) {
 	
 	// Push in history and change page
 	var team = $('#team').data('team');
-	History.push('Team', team);	// HACK: Push team context to go back here
-	History.push('Matchs', {match: record, teamdom: TeamCache.getTeam(record.equipedom), teamext: TeamCache.getTeam(record.equipeext)});
+	History.push('equipe.html', {match: record, teamdom: TeamCache.getTeam(record.equipedom), teamext: TeamCache.getTeam(record.equipeext)});
     $.mobile.changePage("match_detail.html");
 });

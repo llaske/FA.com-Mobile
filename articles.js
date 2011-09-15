@@ -2,6 +2,13 @@
 
 // Update articles list using ligue, match or team
 function updateArticles(target, param) {
+	// On articles list, don't reload if already filled
+	if (target == '#articles_all' && $(target).children().length > 0) {
+		// Hide page loading message
+		$.mobile.hidePageLoadingMsg();
+		return;
+	}
+	
 	// Remove all
 	$(target).children().remove('li');
 	
@@ -65,7 +72,7 @@ $('ul[id="articles_all"] a').live('vclick', function(event, ui) {
 	var record = $('#articles_all').data("records")[n];
 	
 	// Push in history and change page
-	History.push('Articles', record);
+	History.push('index.html', record);
     $.mobile.changePage("article_detail.html");
 });
 
@@ -79,9 +86,8 @@ $('#pg_detail_article').live('pageshow', function(event, ui) {
 	$.mobile.showPageLoadingMsg();
 	
 	// Build url
-	var pop = History.pop();
-	var param = pop.param;
-	var url = prefixBackoffice+'fa_articles_contenu.php?id='+param.id;	
+	var param = History.getParam();
+	var url = prefixBackoffice+'fa_articles_contenu.php?id='+param.id;
 	
 	// Launch ajax request
 	$.getJSON(url, function(data) {

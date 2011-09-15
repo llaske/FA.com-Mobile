@@ -25,3 +25,9 @@ History.getScreen = function() {
 History.getParam = function() {
 	return this.stack[this.count-1].param;
 }
+
+// Set back button event
+$('#btnBackHistory').live('vclick', function(event, ui) {
+	var pop = History.pop();
+	$.mobile.changePage(pop.screen);
+});
