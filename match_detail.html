@@ -3,6 +3,7 @@
   <head>
   <title>Match detail</title>
   <link rel="stylesheet" href="framework/jquery.mobile-1.0b1.min.css" />
+  <link rel="stylesheet" href="m.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <script src="framework/jquery-1.6.2.min.js"></script>
   <script src="framework/jquery.mobile-1.0b1.min.js"></script>
@@ -12,25 +13,25 @@
 <!-- Main page -->
 <div data-role="page" id="pg_match_detail" data-theme="b">
    <div data-role="header" id="header">
-    <h1>FootballAmericain.com</h1>
+    <h1><img src="banner.png"/></h1>
     <a data-role="button" data-icon="arrow-l" id="btnBackHistory">Retour</a>	
   </div>
  
   <div data-role="content" data-theme="d" id="match">	
 	<div id="score" data-theme="d" style="height:200px"></div>
-	<div id="header_score" data-theme="d" class="ui-grid-d" style="position: absolute; left: 120px; top: 120px; width:240px">
+	<div id="header_score" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -70px;width: 240px;">
 		<div class="ui-block-a"><div class="ui-bar ui-bar-c" style="width:20px">qt1</div></div>
 		<div class="ui-block-b"><div class="ui-bar ui-bar-c" style="width:20px">qt2</div></div>
 		<div class="ui-block-c"><div class="ui-bar ui-bar-c" style="width:20px">qt3</div></div>
 		<div class="ui-block-d"><div class="ui-bar ui-bar-c" style="width:20px">qt4</div></div>
 	</div>
-	<div id="detail_scoredom" data-theme="d" class="ui-grid-d" style="position: absolute; left: 120px; top: 150px; width:240px">
+	<div id="detail_scoredom" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -70px;width: 240px;">
 		<div class="ui-block-a"><div id="qt1_dom" class="ui-bar ui-bar-b" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-b"><div id="qt2_dom" class="ui-bar ui-bar-b" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-c"><div id="qt3_dom" class="ui-bar ui-bar-b" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-d"><div id="qt4_dom" class="ui-bar ui-bar-b" style="width:20px">&nbsp;</div></div>		
 	</div>
-	<div id="detail_scoreext" data-theme="d" class="ui-grid-d" style="position: absolute; left: 120px; top: 180px; width:240px">
+	<div id="detail_scoreext" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -70px;width: 240px;">
 		<div class="ui-block-a"><div id="qt1_ext" class="ui-bar ui-bar-c" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-b"><div id="qt2_ext" class="ui-bar ui-bar-c" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-c"><div id="qt3_ext" class="ui-bar ui-bar-c" style="width:20px">&nbsp;</div></div>
@@ -45,7 +46,7 @@
 <!-- Error page -->
 <div data-role="dialog" id="error">
   <div data-role="header" data-position="inline">
-    <h1>FootballAmericain.com</h1>
+    <h1><img src="banner.png"/></h1>
   </div>
   
   <div data-role="content" id="message">	
