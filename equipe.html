@@ -13,8 +13,16 @@
 <!-- Main page -->
 <div data-role="page" id="pg_equipe" data-theme="b">
    <div data-role="header" id="header">
-    <h1><img src="banner.png"/></h1>
-    <a data-role="button" data-icon="arrow-l" id="btnBackHistory">Retour</a>		
+    <h1><img class="fabanner" src="banner.png"/></h1>
+    <a data-role="button" data-icon="arrow-l" id="btnBackHistory" style="position: absolute; left: 0px; top: 45px;">Retour</a><br/><br/>	
+	<div data-role="navbar">
+	  <ul>  
+	    <li><a href="index.html" data-role="button" id="btnArticles" rel="external">Articles</a></li>
+        <li><a href="matchs.html" data-role="button" id="btnScores" rel="external">Scores</a></li>
+        <li><a href="classements.html" data-role="button" id="btnClassements" rel="external">Classements</a></li>
+        <li><a href="filtrer.html" data-role="button" id="btnFiltrer">Filtrer</a></li>
+	  </ul>
+	</div>	
   </div>
  
   <div data-role="content" data-theme="d" id="team">	

@@ -31,3 +31,8 @@ $('#btnBackHistory').live('vclick', function(event, ui) {
 	var pop = History.pop();
 	$.mobile.changePage(pop.screen);
 });
+
+// Set top page button event
+$('#btnTop').live('vclick', function(event, ui) {
+	$('html, body').animate({ scrollTop: 0 }, 0);
+});

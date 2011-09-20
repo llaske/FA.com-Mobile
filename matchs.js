@@ -141,10 +141,10 @@ $('#pg_match_detail').live('pageshow', function(event, ui) {
 	$.getJSON(url, function(data) {			
 		// Display score
 		var html = '';
-		html += '<img  src="'+prefixImages+'images/team/100/'+teamdom.image+'" style="position: absolute; left: 70px; top: 55px; width: 30px"/>';
-		html += '<a href="#" id="teamdom" style="position: absolute; left: 50px; top: 80px">'+teamdom.nom+'</a>';
+		html += '<img  src="'+prefixImages+'images/team/100/'+teamdom.image+'" style="position: absolute; left: 70px; top: 155px; width: 30px"/>';
+		html += '<a href="#" id="teamdom" style="position: absolute; left: 50px; top: 180px">'+teamdom.nom+'</a>';
 		if (match.scoredom != null && match.scoreext != null) {
-			html += '<p style="position: absolute; left: 130px; top: 60px"><strong>'+match.scoredom+' - '+match.scoreext+'</strong></p>';
+			html += '<p style="position: absolute; left: 130px; top: 160px"><strong>'+match.scoredom+' - '+match.scoreext+'</strong></p>';
 		} else {
 			// Get date and time
 			var dateParts = match.date.split("-");
@@ -153,12 +153,12 @@ $('#pg_match_detail').live('pageshow', function(event, ui) {
 			var timeParts = match.heure.split(":");
 			
 			// Display date
-			html += '<p style="position: absolute; left: 110px; top: 225px;max-height: 40px"><strong>'+dayNames[date.getDay()]+' '+date.getDate()+'/'+(date.getMonth()+1)+' - '+timeParts[0]+'h'+timeParts[1]+'</strong></p>';
+			html += '<p style="position: absolute; left: 110px; top: 325px;max-height: 40px"><strong>'+dayNames[date.getDay()]+' '+date.getDate()+'/'+(date.getMonth()+1)+' - '+timeParts[0]+'h'+timeParts[1]+'</strong></p>';
 		}
-		html += '<a href="#" id="teamext" style="position: absolute; left: 210px; top: 80px">'+teamext.nom+'</a>';		
-		html += '<img  src="'+prefixImages+'images/team/100/'+teamext.image+'" style="position: absolute; left: 230px; top: 55px; width: 30px"/>';	
-		html += '<p style="position: absolute; left: 5px; top: 140px">'+teamdom.nom+'</p>';	
-		html += '<p style="position: absolute; left: 5px; top: 180px">'+teamext.nom+'</p>';			
+		html += '<a href="#" id="teamext" style="position: absolute; left: 210px; top: 180px">'+teamext.nom+'</a>';		
+		html += '<img  src="'+prefixImages+'images/team/100/'+teamext.image+'" style="position: absolute; left: 230px; top: 155px; width: 30px"/>';	
+		html += '<p style="position: absolute; left: 5px; top: 255px">'+teamdom.nom+'</p>';	
+		html += '<p style="position: absolute; left: 5px; top: 295px">'+teamext.nom+'</p>';			
 		$('#score').html(html);
 		
 		// Display detail score

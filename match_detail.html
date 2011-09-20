@@ -13,25 +13,33 @@
 <!-- Main page -->
 <div data-role="page" id="pg_match_detail" data-theme="b">
    <div data-role="header" id="header">
-    <h1><img src="banner.png"/></h1>
-    <a data-role="button" data-icon="arrow-l" id="btnBackHistory">Retour</a>	
+    <h1><img class="fabanner" src="banner.png"/></h1>
+    <a data-role="button" data-icon="arrow-l" id="btnBackHistory" style="position: absolute; left: 0px; top: 45px;">Retour</a><br/><br/>	
+	<div data-role="navbar">
+	  <ul>  
+	    <li><a href="index.html" data-role="button" id="btnArticles" rel="external">Articles</a></li>
+        <li><a href="matchs.html" data-role="button" id="btnScores" rel="external">Scores</a></li>
+        <li><a href="classements.html" data-role="button" id="btnClassements" rel="external">Classements</a></li>
+        <li><a href="filtrer.html" data-role="button" id="btnFiltrer">Filtrer</a></li>
+	  </ul>
+	</div>	
   </div>
  
   <div data-role="content" data-theme="d" id="match">	
 	<div id="score" data-theme="d" style="height:200px"></div>
-	<div id="header_score" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -70px;width: 240px;">
+	<div id="header_score" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -120px;width: 240px;">
 		<div class="ui-block-a"><div class="ui-bar ui-bar-c" style="width:20px">qt1</div></div>
 		<div class="ui-block-b"><div class="ui-bar ui-bar-c" style="width:20px">qt2</div></div>
 		<div class="ui-block-c"><div class="ui-bar ui-bar-c" style="width:20px">qt3</div></div>
 		<div class="ui-block-d"><div class="ui-bar ui-bar-c" style="width:20px">qt4</div></div>
 	</div>
-	<div id="detail_scoredom" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -70px;width: 240px;">
+	<div id="detail_scoredom" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -120px;width: 240px;">
 		<div class="ui-block-a"><div id="qt1_dom" class="ui-bar ui-bar-b" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-b"><div id="qt2_dom" class="ui-bar ui-bar-b" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-c"><div id="qt3_dom" class="ui-bar ui-bar-b" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-d"><div id="qt4_dom" class="ui-bar ui-bar-b" style="width:20px">&nbsp;</div></div>		
 	</div>
-	<div id="detail_scoreext" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -70px;width: 240px;">
+	<div id="detail_scoreext" data-theme="d" class="ui-grid-d" style="position: relative;left: 90px;top: -120px;width: 240px;">
 		<div class="ui-block-a"><div id="qt1_ext" class="ui-bar ui-bar-c" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-b"><div id="qt2_ext" class="ui-bar ui-bar-c" style="width:20px">&nbsp;</div></div>
 		<div class="ui-block-c"><div id="qt3_ext" class="ui-bar ui-bar-c" style="width:20px">&nbsp;</div></div>
