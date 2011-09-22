@@ -13,9 +13,27 @@ TeamCache.bulkloadTeams = function(ids, ok_callback, ko_callback) {
 		ok_callback();
 		return;
 	}
-	$.each(ids, function(n) {
-		TeamCache.loadTeam(ids[n], ok_callback, ko_callback);
-	});		
+	
+	// Build url
+	var url = prefixBackoffice+"fa_equipes.php?id=" + ids;
+	console.log(url);
+	
+	// Load data for this team
+	$.getJSON(url, function(data) {
+		// Set team in cache
+		console.log(data);
+		$.each(data, function(n) {
+			var team = data[n];
+			TeamCache.content[team.id] = team;
+		});
+		ok_callback();
+	})
+	
+	// Loading error
+	.error(function() {
+		ko_callback();
+	});	
+	
 }
 
 // Load a team
@@ -28,6 +46,7 @@ TeamCache.loadTeam = function(id, ok_callback, ko_callback) {
 			ok_callback();
 		return;
 	}
+	
 	// Build url
 	var url = prefixBackoffice+"fa_equipes.php?id=" + id;
 	
