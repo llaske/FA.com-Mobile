@@ -43,7 +43,7 @@
 	// Filter on ligue
 	if(isset($_GET['ligue'])&&!empty($_GET['ligue']))
 	{
-		$result = x_RedactionSectionSelect(null,LIGUE,null,null,null,$iPagerSpan,false,false,NEWS_NO) ; //toute les ligues $_GET['ligue']
+		$result = x_RedactionSectionSelect(null,LIGUE,$_GET['ligue'],null,null,$iPagerSpan,false,false,NEWS_NO) ; //toute les ligues $_GET['ligue']
 	}
 
 	// Filter on match
