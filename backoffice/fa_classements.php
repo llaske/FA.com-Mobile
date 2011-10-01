@@ -52,13 +52,17 @@
 			AND division_franchise.idDiv=division.idDiv
 			AND conference_division.idDiv=division.idDiv
 			AND conference_division.idConference=conference.idConf
-			AND clmnt_apres_journee = " . $current_week;
+			AND clmnt_apres_journee = %s
+		ORDER BY conf ASC, division ASC, CLMNT ASC";
 	
-	// Build end of request
-	$request = $request . " ORDER BY conf ASC, division ASC, CLMNT ASC";
+	// Run query for current week
+	$result = mysql_query(sprintf($request,$current_week));
 	
-	// Run query
-	$result = mysql_query($request);
+	if (mysql_num_rows($result)==0)
+	{
+		//Run query again for previous week
+		$result = mysql_query(sprintf($request,$current_week-1));
+	}
 
 	// Loop on each classement
 	$i = 0;
