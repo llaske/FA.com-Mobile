@@ -2,18 +2,18 @@
 <html>
   <head>
   <title>Equipe</title>
-  <link rel="stylesheet" href="framework/jquery.mobile-1.0b1.min.css" />
+  <link rel="stylesheet" href="framework/jquery.mobile-1.0rc1.min.css" />
   <link rel="stylesheet" href="m.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <script src="framework/jquery-1.6.2.min.js"></script>
-  <script src="framework/jquery.mobile-1.0b1.min.js"></script>
+  <script src="framework/jquery.mobile-1.0rc1.min.js"></script>
 </head>
 <body>
  
 <!-- Main page -->
 <div data-role="page" id="pg_equipe" data-theme="b">
-   <div data-role="header" id="header">
+   <div data-role="header" id="header" data-theme="b">
     <h1><img class="fabanner" src="banner.png"/></h1>
     <a data-role="button" data-icon="arrow-l" id="btnBackHistory" style="position: absolute; left: 0px; top: 45px;">Retour</a><br/><br/>	
 	<div data-role="navbar">
@@ -21,7 +21,7 @@
 	    <li><a href="index.html" data-role="button" id="btnArticles" rel="external">Articles</a></li>
         <li><a href="matchs.html" data-role="button" id="btnScores" rel="external">Scores</a></li>
         <li><a href="classements.html" data-role="button" id="btnClassements" rel="external">Classements</a></li>
-        <li><a href="filtrer.html" data-role="button" id="btnFiltrer">Filtrer</a></li>
+        <li><a href="filtrer.html" data-role="button" id="btnFiltrer" rel="external">Filtrer</a></li>
 	  </ul>
 	</div>	
   </div>
@@ -44,7 +44,7 @@
 <!-- Error page -->
 <div data-role="dialog" id="error">
   <div data-role="header" data-position="inline">
-    <h1><img src="banner.png"/></h1>
+    <h1>Erreur</h1>
   </div>
   
   <div data-role="content" id="message">	

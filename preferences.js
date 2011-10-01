@@ -30,7 +30,7 @@ Preferences.elite = ($.cookie('fa_elite')==null?true:$.cookie('fa_elite')=="true
 Preferences.getLigues = function() {
 	var count = 0;
 	var ligues = "";
-	if (this.nfl) {
+	if (this.nfl || this.nfl == null) {
 		ligues = ligues + "1";
 		count++;
 	}
@@ -67,7 +67,7 @@ $('#pg_filtrer').live('pageshow', function(event, ui) {
 });
 
 // Hide page, get new preferences
-$('#pg_filtrer').live('pagehide', function(event, ui) {
+$('ul[id="filtrer_nav"] a').live('vclick', function(event, ui) {
 	Preferences.nfl = ($('#nfl').val() == 'on');
 	$.cookie('fa_nfl', Preferences.nfl, { path: '/' });
 	Preferences.ncaa = ($('#ncaa').val() == 'on');
