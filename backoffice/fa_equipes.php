@@ -23,6 +23,7 @@
 	if(isset($_GET['id'])&&!empty($_GET['id']))
 	{
 		$ids = explode(",",$_GET['id']);
+		$ids = array_unique($ids) ;
 	}
 
 	// Create array for results
