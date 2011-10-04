@@ -2,6 +2,13 @@
 
 // Load matchs
 function loadMatchs() {
+	// On match list, don't reload if already filled
+	if ($("#matchs").children().length > 0) {
+		// Hide page loading message
+		$.mobile.hidePageLoadingMsg();
+		return;
+	}
+	
 	// Build url
 	var url = prefixBackoffice+'fa_matchs.php?ligue=1';
 	
