@@ -1,3 +1,4 @@
 .ui-header .ui-title, .ui-footer .ui-title { min-height: 1.1em; text-align: center; font-size: 16px; display: block;  padding: 0;   white-space: nowrap; outline: 0 !important; }
 .ui-header {background: #fff;text-shadow: 0; background-image: none;-ms-filter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";}
 .fabanner { position: absolute; left: 10px; top: 10px; }
+.ui-li > .ui-btn-inner {overflow:hidden;}
