@@ -52,7 +52,7 @@
 	
 	// Return JSON for a set of equipe or only one
 	if (count($equipes) == 1)
-		echo json_encode($equipes[0]);
+		echo encode_json($equipes[0]);
 	else
-		echo json_encode($equipes);
+		echo encode_json($equipes);
 ?>

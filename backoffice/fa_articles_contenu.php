@@ -33,5 +33,5 @@
 		// No article
 		$article = null;
 	}
-	echo json_encode($article);
+	echo encode_json($article);
 ?>

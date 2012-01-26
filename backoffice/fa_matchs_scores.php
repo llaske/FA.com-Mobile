@@ -40,5 +40,5 @@
 		// No match
 		$match = null;
 	}
-	echo json_encode($match);
+	echo encode_json($match);
 ?>

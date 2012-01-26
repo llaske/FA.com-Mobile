@@ -19,10 +19,6 @@
 	connect_db();
 	
 	// Create request
-//	$request = "SELECT idRedaction, titre1, titre2, initiales, concat(dossier,'/',nomImage), corps, DATE_FORMAT(publication, '%d/%m/%Y à %k:%i:%s')
-//	            FROM auteur AS a, redaction AS r LEFT JOIN image AS i ON r.idMainImage = i.idImage
-//	            WHERE r.auteur = a.idAuteur";
-
 	$iPagerSpan = "0," . constant("max_list_size");
 	$result = null ;
 	
@@ -52,13 +48,6 @@
 		$result = x_RedactionSectionSelect(null,MATCH,$_GET['match'],null,null,$iPagerSpan,false,false,NEWS_NO) ;
 	}
 
-	// Order and limit
-	///$request = $request . " ORDER BY publication DESC ";
-	//$request = $request . " LIMIT 0, " .  constant("max_list_size");
-
-	// Run query
-	//$result = mysql_query($request);
-
 	// Create array
 	$articles = array();
 	$i = 0;
@@ -68,19 +57,6 @@
 		
 		//Get Image path (image linked to article if exist. main image of the section if not)
 		list($sPathImage,$sPathThumb,$sPathSlider,$sCommentaire) = getImagePathAndThumbPathFromRedaction($row) ;
-		
-		// Get section image if image is null
-//		if ($row[4] == null) {
-//			// Build request
-//			$imagereq = "SELECT concat(dossier,'/',nomImage) FROM x_redaction_section, section, image WHERE idS=mainSection AND mainImageIdS=idImage AND idRedaction=" . $row['idRedaction'];
-//			
-//			// Run query
-//			$imageres = mysql_query($imagereq);
-//			if ($imgrow = mysql_fetch_array($imageres)) {
-//				$row[4] = $imgrow[0];	
-//			}
-//			mysql_free_result($imageres);
-//		}
 		
 		// Convert to object
 		$article = new Article();  
@@ -101,14 +77,8 @@
         $article = null;	
 		if (count($articles) > 0)
 			$article = $articles[0];
-		echo json_encode($article);
+		echo encode_json($article);
 	}
 	else
-		echo json_encode($articles);
-
-	// Free result and close connection
-	//mysql_free_result($result);
-	
-	// Close database
-	//close_db();
+		echo encode_json($articles);
 ?>

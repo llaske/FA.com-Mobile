@@ -21,7 +21,7 @@
 	// Must filter on ligue	
 	if(!isset($_GET['ligue'])||empty($_GET['ligue'])) {	
 		// Ligue not found
-		echo json_encode($matchs);
+		echo encode_json($matchs);
 		return;
 	}
 		
@@ -35,7 +35,7 @@
 	// Get last competition
 	if (is_null($row)) {
 		// Competition not found, stop
-		echo json_encode($matchs);
+		echo encode_json($matchs);
 
 		return;
 	}
@@ -110,10 +110,10 @@
         $match = null;	
 		if (count($matchs) > 0)
 			$match = $matchs[0];
-		echo json_encode($match);
+		echo encode_json($match);
 	}
 	else
-		echo json_encode($matchs);
+		echo encode_json($matchs);
 
 	// Free result and close connection
 	//mysql_free_result($result);

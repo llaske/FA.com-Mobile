@@ -115,6 +115,12 @@
 		return $content;
 	}
 	
+	// Encode to JSON or JSONP
+	function encode_json($content) {
+		$json = json_encode($content);
+		return isset($_GET['callback'])	? "{$_GET['callback']}($json)" : $json;	
+	}
+	
 	//SQL Exec
 	function sql_exec($sReqSql)
 	{

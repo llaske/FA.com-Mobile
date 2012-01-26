@@ -20,7 +20,7 @@
 	// Must filter on ligue	
 	if(!isset($_GET['ligue'])||empty($_GET['ligue'])) {	
 		// Ligue not found
-		echo json_encode($classements);
+		echo encode_json($classements);
 		return;
 	}
 		
@@ -34,7 +34,7 @@
 	// Get last competition
 	if (is_null($row)) {
 		// Competition not found, stop
-		echo json_encode($classements);
+		echo encode_json($classements);
 
 		return;
 	}
@@ -89,5 +89,5 @@
 	}
 
 	// Return JSON for all classements
-	echo json_encode($classements);
+	echo encode_json($classements);
 ?>
