@@ -8,7 +8,7 @@ function updateArticles(target, param) {
 		$.mobile.hidePageLoadingMsg();
 		return;
 	}
-	
+
 	// Remove all
 	$(target).children().remove('li');
 

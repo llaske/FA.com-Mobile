@@ -2,7 +2,7 @@
 //----------------- Global constants
 
 prefixSite = "/mobile/";
-prefixBackoffice = "http://localhost/mobile/backoffice/";
+prefixBackoffice = "http://m.footballamericain.com/backoffice/v2/";
 prefixImages = "http://www.footballamericain.com/images/";
 
 

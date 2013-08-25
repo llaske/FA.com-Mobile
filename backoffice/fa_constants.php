@@ -24,7 +24,7 @@
 	
 	date_default_timezone_set('Europe/Paris');	
 	
-	require_once("include/p3f-rewriting.class.php"); // business functions FA-NFL	
+	require_once("p3f-rewriting.class.php"); // business functions FA-NFL	
 	
 	$oP3F_URL = new P3F_Rewriting("") ; //création de l'objet P3F_URL	
 	
