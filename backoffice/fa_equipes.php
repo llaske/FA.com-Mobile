@@ -40,10 +40,10 @@
 			// Convert to object
 			$equipe = new Equipe();  
 			$equipe->id = $row['idUsfoot'];
-			$equipe->nom = $row['franchise'];	
-			$equipe->ville = $row['franchise2'];
+			$equipe->nom = utf8_encode($row['franchise']);	
+			$equipe->ville = utf8_encode($row['franchise2']);
 			$equipe->image = $row['acronyme'] . "-logo.jpg";		
-			$equipe->creation = $row['franchiseadd'];
+			$equipe->creation = utf8_encode($row['franchiseadd']);
 			$equipe->web = $row['siteofficiel'];
 			$equipes[$i] = $equipe;
 			$i = $i + 1;

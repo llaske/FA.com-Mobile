@@ -8,12 +8,21 @@
 		public $image;
 		public $resume;
 		public $date;
+		public $urlsite;		
 	}
 	
 	// Class to handle article/contenu
 	Class ArticleContenu {
 		public $id;
 		public $corps;
+	}
+	
+	// Class to handle article/commentaire
+	Class ArticleCommentaire {
+		public $id;
+		public $nom;
+		public $contenu;
+		public $date;
 	}
 	
 	// Class to handle matchs

@@ -1,4 +1,4 @@
-//----------------- Screen Classements
+﻿//----------------- Screen Classements
 
 // Load classements
 function loadClassements() {
@@ -6,7 +6,7 @@ function loadClassements() {
 	var url = prefixBackoffice+'fa_classements.php?ligue=1';
 	
 	// Launch ajax request to load classements
-	$.getJSON(url, function(data) {
+	$.getJSONWithMoz(url, function(data) {
 		// Store data
 		$('#classements').data('records', data);
 		
@@ -92,6 +92,7 @@ function displayClassements() {
 // Init page classements
 $('#pg_classements').live('pageshow', function(event, ui) {
 	// Show loading message
+	Stats.trace("/mobile/classements");
 	$.mobile.showPageLoadingMsg();	
 	
 	// Load classements
@@ -101,5 +102,9 @@ $('#pg_classements').live('pageshow', function(event, ui) {
 // Set conference click handler to change conference view
 $('input[name="conference"]').live('change', function(event, ui) {
 	// Display the current conference
+	if ($('#conference_afc').attr('checked'))
+		Stats.trace("/mobile/AFC");
+	else
+		Stats.trace("/mobile/NFC");
 	displayClassements();
 });

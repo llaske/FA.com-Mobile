@@ -1,8 +1,8 @@
-
+﻿
 //----------------- Global constants
 
 prefixSite = "/mobile/";
-prefixBackoffice = "backoffice/";
+prefixBackoffice = "http://localhost/mobile/backoffice/";
 prefixImages = "http://www.footballamericain.com/images/";
 
 
@@ -22,9 +22,9 @@ $("[data-role='page']").live('pagebeforecreate',function(event){
 Preferences = {};
 
 // Filter preference value
-Preferences.nfl = ($.cookie('fa_nfl')==null?true:$.cookie('fa_nfl')=="true");
-Preferences.ncaa = ($.cookie('fa_ncaa')==null?true:$.cookie('fa_ncaa')=="true");
-Preferences.elite = ($.cookie('fa_elite')==null?true:$.cookie('fa_elite')=="true");
+Preferences.nfl = (LocalStorage.getValue('fa_nfl')==null?true:LocalStorage.getValue('fa_nfl'));
+Preferences.ncaa = (LocalStorage.getValue('fa_ncaa')==null?true:LocalStorage.getValue('fa_ncaa'));
+Preferences.elite = (LocalStorage.getValue('fa_elite')==null?true:LocalStorage.getValue('fa_elite'));
 
 // Build the param url to filter using ligue
 Preferences.getLigues = function() {
@@ -34,7 +34,7 @@ Preferences.getLigues = function() {
 		ligues = ligues + "1";
 		count++;
 	}
-	if (this.ncaa) {
+	if (this.ncaa || this.ncaa == null) {
 		if (count > 0) {
 			ligues = ligues + ",";
 			count = 0;
@@ -42,14 +42,14 @@ Preferences.getLigues = function() {
 		ligues = ligues + "2";
 		count++;
 	}
-	if (this.elite) {
+	if (this.elite || this.elite == null) {
 		if (count > 0) {
 			ligues = ligues + ",";
 			count = 0;
 		}
 		ligues = ligues + "3";
 		count++;
-	}	
+	}
 	return ligues;
 }
 
@@ -57,6 +57,7 @@ Preferences.getLigues = function() {
 
 // Init page 
 $('#pg_filtrer').live('pageshow', function(event, ui) {  
+	Stats.trace("/mobile/filtrer");
 	$('#nfl').val(Preferences.nfl?'on':'off');
 	$('#nfl').slider('refresh');
 	$('#nfl').slider('disable');	
@@ -67,13 +68,13 @@ $('#pg_filtrer').live('pageshow', function(event, ui) {
 });
 
 // Hide page, get new preferences
-$('ul[id="filtrer_nav"] a').live('vclick', function(event, ui) {
+$('ul[id="filtrer_nav"] a').live(clickAction, function(event, ui) {
 	Preferences.nfl = ($('#nfl').val() == 'on');
-	$.cookie('fa_nfl', Preferences.nfl, { path: '/' });
+	LocalStorage.setValue('fa_nfl', Preferences.nfl);
 	Preferences.ncaa = ($('#ncaa').val() == 'on');
-	$.cookie('fa_ncaa', Preferences.ncaa, { path: '/' });	
+	LocalStorage.setValue('fa_ncaa', Preferences.ncaa);	
 	Preferences.elite = ($('#elite').val() == 'on');
-	$.cookie('fa_elite', Preferences.elite, { path: '/' });	
+	LocalStorage.setValue('fa_elite', Preferences.elite);	
 });
 
 

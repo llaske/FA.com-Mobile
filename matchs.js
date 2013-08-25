@@ -1,4 +1,4 @@
-//----------------- Screen Matchs
+﻿//----------------- Screen Matchs
 
 // Load matchs
 function loadMatchs() {
@@ -13,7 +13,7 @@ function loadMatchs() {
 	var url = prefixBackoffice+'fa_matchs.php?ligue=1';
 	
 	// Launch ajax request to load matchs
-	$.getJSON(url, function(data) {
+	$.getJSONWithMoz(url, function(data) {
 		// Store data
 		var ids = [];
 		var count = 0;
@@ -110,6 +110,7 @@ function updateMatchs() {
 // Init page matchs
 $('#pg_matchs').live('pageshow', function(event, ui) {
 	// Show loading message
+	Stats.trace("/mobile/scores");	
 	$.mobile.showPageLoadingMsg();	
 	
 	// Load matchs
@@ -117,14 +118,14 @@ $('#pg_matchs').live('pageshow', function(event, ui) {
 });
 
 // Set article click handler
-$('ul[id="matchs"] a').live('vclick', function(event, ui) {
+$('ul[id="matchs"] a').live(clickAction, function(event, ui) {
 	// Get match and team selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#matchs').data("records")[n];
 	
 	// Push in history and change page
 	History.push('matchs.html', {match: record, teamdom: TeamCache.getTeam(record.equipedom), teamext: TeamCache.getTeam(record.equipeext)});
-    $.mobile.changePage("match_detail.html");
+    History.changePage("match_detail.html");
 });
 
 
@@ -139,13 +140,14 @@ $('#pg_match_detail').live('pageshow', function(event, ui) {
 	// Build url to get score
 	var param = History.getParam();
 	var match = param.match;
+	Stats.trace("/mobile/match/"+match.id);	
 	var teamdom = param.teamdom;
 	var teamext = param.teamext;
 	$('#match').data('param', param);	
 	var url = prefixBackoffice+'fa_matchs_scores.php?id='+match.id;
 	
 	// Launch ajax request
-	$.getJSON(url, function(data) {			
+	$.getJSONWithMoz(url, function(data) {			
 		// Display score
 		var html = '';
 		html += '<img  src="'+prefixImages+'images/team/100/'+teamdom.image+'" style="position: absolute; left: 70px; top: 155px; width: 30px"/>';
@@ -193,7 +195,7 @@ $('#pg_match_detail').live('pageshow', function(event, ui) {
 });
 
 // Set article click handler from detail match
-$('ul[id="articles_match"] a').live('vclick', function(event, ui) {
+$('ul[id="articles_match"] a').live(clickAction, function(event, ui) {
 	// Get article selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#articles_match').data("records")[n];
@@ -201,25 +203,25 @@ $('ul[id="articles_match"] a').live('vclick', function(event, ui) {
 	// Push in history and change page
 	History.push('matchs.html', $('#match').data('param'));	// HACK: Push match context to go back here
 	History.push('match_detail.html', record);	
-    $.mobile.changePage("article_detail.html");
+    History.changePage("article_detail.html");
 });
 
 // Set team click handler
-$('#pg_match_detail > #match > #score > #teamdom').live('vclick', function(event, ui) {
+$('#pg_match_detail > #match > #score > #teamdom').live(clickAction, function(event, ui) {
 	// Get team clicked
 	var param = $('#match').data('param');
 	var teamdom = param.teamdom;
 	
 	// Push in history and change page
 	History.push('match_detail.html', teamdom);
-    $.mobile.changePage("equipe.html");
+    History.changePage("equipe.html");
 });
-$('#pg_match_detail > #match > #score > #teamext').live('vclick', function(event, ui) {
+$('#pg_match_detail > #match > #score > #teamext').live(clickAction, function(event, ui) {
 	// Get team clicked
 	var param = $('#match').data('param');
 	var teamext = param.teamext;
 	
 	// Push in history and change page
 	History.push('match_detail.html', teamext);
-    $.mobile.changePage("equipe.html");
+    History.changePage("equipe.html");
 });

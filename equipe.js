@@ -1,4 +1,4 @@
-
+﻿
 //----------------- Cache Equipe handling
 TeamCache = {};
 
@@ -18,7 +18,7 @@ TeamCache.bulkloadTeams = function(ids, ok_callback, ko_callback) {
 	var url = prefixBackoffice+"fa_equipes.php?id=" + ids;
 	
 	// Load data for this team
-	$.getJSON(url, function(data) {
+	$.getJSONWithMoz(url, function(data) {
 		// Set team in cache
 		$.each(data, function(n) {
 			var team = data[n];
@@ -49,7 +49,7 @@ TeamCache.loadTeam = function(id, ok_callback, ko_callback) {
 	var url = prefixBackoffice+"fa_equipes.php?id=" + id;
 	
 	// Load data for this team
-	$.getJSON(url, function(data) {
+	$.getJSONWithMoz(url, function(data) {
 		// Store team data
 		TeamCache.content[id] = data;
 
@@ -80,11 +80,12 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 	// Display information about team
 	var param = History.getParam();
 	var team = param;
+	Stats.trace("/mobile/team/"+team.id);
 	$('#team').data('team', team);	
 	$('#team > #nom').html(team.ville + ' ' +team.nom);
 	var html = '';
 	if (team.creation != null) {
-		html += 'Cr�ation '+team.creation;
+		html += 'Création '+team.creation;
 		if (team.creation[team.creation.length-1] != '.')
 			html += '.';
 	}
@@ -99,7 +100,7 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 	var ids = [];
 	var count = 0;	
 	$('#matchs_collapse').attr('data-collapsed', true);
-	$.getJSON(url, function(data) {
+	$.getJSONWithMoz(url, function(data) {
 		// Store data
 		$('#matchs_equipe').data('records', data);
 		$.each(data, function() {
@@ -140,9 +141,12 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 					if (parseInt(score) > parseInt(opponentscore)) {
 						result = ' V ';
 						theme = 'b';
-					} else {
+					} else if (parseInt(score) < parseInt(opponentscore)) {
 						result = ' D ';
 						theme = 'c';
+					} else {
+						result = ' N ';
+						theme = 'd';
 					}
 					if (this.scoredom != null && this.scoreext != null) {
 						scorestring = this.scoredom + '-' + this.scoreext;
@@ -189,7 +193,7 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 });
 
 // Set article click handler from team
-$('ul[id="articles_equipe"] a').live('vclick', function(event, ui) {
+$('ul[id="articles_equipe"] a').live(clickAction, function(event, ui) {
 	// Get article selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#articles_equipe').data("records")[n];
@@ -197,11 +201,11 @@ $('ul[id="articles_equipe"] a').live('vclick', function(event, ui) {
 	// Push in history and change page
 	var team = $('#team').data('team');
 	History.push('equipe.html', record);	
-    $.mobile.changePage("article_detail.html");
+    History.changePage("article_detail.html");
 });
 
 // Set match click handler
-$('ul[id="matchs_equipe"] a').live('vclick', function(event, ui) {
+$('ul[id="matchs_equipe"] a').live(clickAction, function(event, ui) {
 	// Get match and team selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#matchs_equipe').data("records")[n];
@@ -209,5 +213,5 @@ $('ul[id="matchs_equipe"] a').live('vclick', function(event, ui) {
 	// Push in history and change page
 	var team = $('#team').data('team');
 	History.push('equipe.html', {match: record, teamdom: TeamCache.getTeam(record.equipedom), teamext: TeamCache.getTeam(record.equipeext)});
-    $.mobile.changePage("match_detail.html");
+    History.changePage("match_detail.html");
 });

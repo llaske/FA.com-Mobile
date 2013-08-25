@@ -1,0 +1,19 @@
+﻿{
+    "name": "Football Americain",
+	"type": "privileged",
+	"launch_path": "/index.html",
+    "developer": {
+        "name": "C2S - Lionel Laské",
+        "url": "http://www.footballamericain.com"
+    },
+    "icons":{
+        "128":"/icons/fadotcom-128.png",
+		"60":"/icons/fadotcom-60.png",
+		"30":"/icons/fadotcom-30.png"
+    },
+	"permissions": {
+		"systemXHR": "Nécessaire pour accéder aux flux du site et pour statistiques."
+	},	
+    "description": "Toute l'actualité du Football Américain en France: les championnats américains NFL, NCAA et le championnat Elite en France.",
+	"default_locale": "fr"
+}

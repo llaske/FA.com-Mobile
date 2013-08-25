@@ -1,4 +1,4 @@
-//----------------- Screen Articles
+﻿//----------------- Screen Articles
 
 // Update articles list using ligue, match or team
 function updateArticles(target, param) {
@@ -11,7 +11,7 @@ function updateArticles(target, param) {
 	
 	// Remove all
 	$(target).children().remove('li');
-	
+
 	// Build url
 	var url = prefixBackoffice+'fa_articles.php';
 	if (param != null) {
@@ -22,12 +22,12 @@ function updateArticles(target, param) {
 		else if (param.team != null)
 			url += '?equipe=' + param.team;
 	}
-
+	
 	// Launch ajax request
-	$.getJSON(url, function(data) {
+	$.getJSONWithMoz(url, function(data) {
 		// Store data
 		$(target).data('records', data);
-	
+
 		// Append each item
 		$.each(data, function(n) {
 			var html = '';
@@ -47,7 +47,7 @@ function updateArticles(target, param) {
 	})
 	
 	// Loading error
-	.error(function() {
+	.error(function(req) {
 		// Hide page loading message
 		$.mobile.hidePageLoadingMsg();
 
@@ -59,21 +59,25 @@ function updateArticles(target, param) {
 // Init page articles
 $('#pg_articles').live('pageshow', function(event, ui) {
 	// Show loading message
+	Stats.trace("/mobile/articles");
 	$.mobile.showPageLoadingMsg();	
+
+	// Clear history
+	History.clear();
 	
 	// Update article using ligue
 	updateArticles('#articles_all', {ligue: Preferences.getLigues()});	
 });
 
 // Set article click handler from articles list
-$('ul[id="articles_all"] a').live('vclick', function(event, ui) {
+$('ul[id="articles_all"] a').live(clickAction, function(event, ui) {
 	// Get article selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#articles_all').data("records")[n];
 	
 	// Push in history and change page
 	History.push('index.html', record);
-    $.mobile.changePage("article_detail.html");
+    History.changePage("article_detail.html");
 });
 
 
@@ -85,23 +89,46 @@ $('#pg_detail_article').live('pageshow', function(event, ui) {
 	// Show page loading message
 	$.mobile.showPageLoadingMsg();
 	
-	// Build url
+	// Build url to get content
 	var param = History.getParam();
 	var url = prefixBackoffice+'fa_articles_contenu.php?id='+param.id;
-	
+	Stats.trace("/mobile/article/"+param.id);
+	var urlsite = param.urlsite;
+
 	// Launch ajax request
-	$.getJSON(url, function(data) {
+	$.getJSONWithMoz(url, function(data) {
 		// Append item
 		var html = '';
 		html += '<h2><font style: "color: red;">'+param.titre+'</font></h2>';
 		html += '<h3>'+param.soustitre+'</h3>';
 		html += '<h6>le '+param.date+' par '+param.auteur+'</h6>';
 		html += '<img src="'+param.imagemedium+'"/>';
-		html += data.corps;
+		html += '<div style="text-align: justify;">'+data.corps+'</div>';
 		$('#article').html(html);
 	  
 		// Hide page loading message
 		$.mobile.hidePageLoadingMsg();
+	
+		// Build url to get comments
+		url = prefixBackoffice+'fa_articles_comments.php?id='+param.id;
+		
+		// Launch ajax request
+		var articlehtml = html;
+		$.getJSONWithMoz(url, function(data) {
+			// Append item
+			var html = articlehtml;
+			var text = '';
+			if (data.length == 0)
+				text = "Soyez le premier à commenter cet article !";
+			else
+				text = data.length + " commentaire" + (data.length > 1 ? "s":"") + " sur l'article";
+			html += '<br/><a target="_new" href="http://www.footballamericain.com'+urlsite+'#trackback" rel="external">'+text+'</a><br/><br/>';
+			$('#article').html(html);
+		})
+		
+		// Loading error
+		.error(function() {
+		});		
 	})
 	
 	// Loading error
@@ -111,5 +138,11 @@ $('#pg_detail_article').live('pageshow', function(event, ui) {
 
 	  // Show error dialog
 	  $.mobile.changePage("#error", "pop", false, false); 
-	});	
+	});		
+});
+
+// HACK: Force Articles reference action (need for Firefox OS)
+$('#btnArticles').live(clickAction, function(event, ui) {
+	History.changePage("index.html");
+	return true;
 });

@@ -2,7 +2,7 @@
 	//-------------------------------------------------
 	// ENTITY:     classements
 	// METHOD:     GET
-	// PARAMETERS: ligue
+	// PARAMETERS: ligue, season
 	// RETURN:     array of Classement object AS JSON
 	//-------------------------------------------------
 	
@@ -28,7 +28,10 @@
 	connect_db();
 	
 	// Create request to get competition
-	$season = constant("force_season");
+	if(isset($_GET['season'])&&!empty($_GET['season']))
+		$season = $_GET['season'];
+	else
+		$season = constant("force_season");	
 	$row = getCompetitionInfo($_GET['ligue'],$season) ;
 
 	// Get last competition
@@ -41,7 +44,7 @@
 
 	// Create base request
 	$current_week = $row['current_week'];
-	if ($current_week <= 0) 
+	if ($current_week <= 0 || $current_week>17) 
 		$current_week = 17;	
 		
 	$request = "SELECT ID_EQUIPE, franchise, conf, CLMNT_CONF, division, CLMNT, playoffs, G, N, P, PP, PC
@@ -81,7 +84,7 @@
 		$classement->p = $row['P'];
 		$classement->pf = $row['PP'];
 		$classement->pa = $row['PC'];		
-		$classement->pct = round($classement->g/($classement->g+$classement->p)*100,2) ;
+		$classement->pct = computeVictoryPercentage($classement->g,$classement->n,$classement->p) ;
 		
 		// Store in array
 		$classements[$i] = $classement;

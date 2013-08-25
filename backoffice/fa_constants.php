@@ -1,9 +1,9 @@
 <?php 
 	// Database connection
 	define("mysql_server", "localhost");
-	define("mysql_user", "football");
-	define("mysql_password", "xxxxxxxxx");
-	define("mysql_database", "football");
+	define("mysql_user", "root");
+	define("mysql_password", "");
+	define("mysql_database", "football_lionel");
 	
 	// Image prefix
 	define("prefix_global", "http://www.footballamericain.com/");
@@ -18,9 +18,15 @@
 	define("max_list_size", "12");
 	define("max_resume_size", 90);
 	define("max_competition_days", 3);
-	define("force_season", "2010");
+	define("force_season", "2012");
 	
-	date_default_timezone_set('Europe/Paris');
+	$_SESSION['URL_REWRITING_ENABLED'] = true ;
 	
-	require_once("include/fonctions-fanfl.php"); // business functions FA-NFL
+	date_default_timezone_set('Europe/Paris');	
+	
+	require_once("include/p3f-rewriting.class.php"); // business functions FA-NFL	
+	
+	$oP3F_URL = new P3F_Rewriting("") ; //création de l'objet P3F_URL	
+	
+	require_once("include/fonctions-fanfl.php"); // business functions FA-NFL	
 ?>

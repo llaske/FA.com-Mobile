@@ -2,7 +2,7 @@
 	//-------------------------------------------------
 	// ENTITY:     matchs
 	// METHOD:     GET
-	// PARAMETERS: ligue, equipe
+	// PARAMETERS: ligue, equipe, season, maxcompdays
 	// RETURN:     array of Match object AS JSON (if id not mentionned)
 	//             Match object AS JSON          (if id mentionned)
 	//-------------------------------------------------
@@ -29,7 +29,10 @@
 	connect_db();
 	
 	// Create request to get competition
-	$season = constant("force_season");
+	if(isset($_GET['season'])&&!empty($_GET['season']))
+		$season = $_GET['season'];
+	else
+		$season = constant("force_season");
 	$row = getCompetitionInfo($_GET['ligue'],$season) ;
 
 	// Get last competition
@@ -41,20 +44,19 @@
 	}
 	
 	// Compute current week
+	if(isset($_GET['maxcompdays'])&&!empty($_GET['maxcompdays']))
+		$maxcompdays = $_GET['maxcompdays'];
+	else
+		$maxcompdays = constant("max_competition_days");
 	$current_week = $row['current_week'];
 	if ($current_week <= 0) {
-		$start_week = 22 - constant("max_competition_days");
+		$start_week = 22 - $maxcompdays;
 		$end_week = 22;
 	} else {
-		$start_week = max($current_week - constant("max_competition_days") - 2, 1);
+		$start_week = max($current_week - $maxcompdays - 2, 1);
 		$end_week = min($current_week + 1, 22);
 	}
 
-	// Create base request
-	/*$request = "SELECT idMatch, dateMatch, heureMatch, acroJournee, journee, libJournee, idUsFootDom, idUsFootExt, score_d, score_e
-		FROM matchs LEFT JOIN journee AS j
-		ON matchs.journee = j.idJournee AND matchs.idCompetition = j.idCompetition
-		WHERE j.typeMatch<2 AND matchs.idCompetition=" . $row['idCompetition'];*/
 	
 	$result = null ;
 	
@@ -114,10 +116,4 @@
 	}
 	else
 		echo encode_json($matchs);
-
-	// Free result and close connection
-	//mysql_free_result($result);
-	
-	// Close database
-	//close_db();
 ?>

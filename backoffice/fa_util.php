@@ -85,7 +85,7 @@
 	}
 	
 	// Build Resume of tags
-	function clean_resume($content) {
+	function clean_resume($content,$cutpos) {
 		// Replace [img ... ] tag
 		$content = subst_images($content);
 		
@@ -93,7 +93,6 @@
 		$content = strip_tags($content);
 		
 		// Get 256 characters only but try to cut on a whitespace
-		$cutpos = constant("max_resume_size");
 		if ($cutpos < strlen($content))
 		{
 			while ($content[$cutpos-1] != ' ')
