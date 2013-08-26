@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.footballamericain.mobile"
+        version   = "2.0.0">
+    <name>Football Americain Mobile</name>
+
+    <description>
+        Retrouvez votre site d'actualité préféré sur le Football Américain dans sa version mobile. Au programme : actualité NFL, FFFA et Elite, scores, classements et franchises NFL. Le meilleur du Football Américain en français..
+    </description>
+
+    <author href="http://www.footballamericain.com" email="lionel.laske@gmail.com">
+        Lionel Laské pour FootballAmericain.com
+    </author>
+	
+	<preference name="permissions" value="none"/>
+
+    <icon src="icons/fadotcom-57.png" />
+	<icon src="icons/fadotcom-64.png" gap:platform="webos" />	
+	<icon src="icons/fadotcom-72.png" gap:platform="webos" />	
+	<icon src="icons/fadotcom-48.png" gap:platform="android" gap:density="mdpi" />	
+	<icon src="icons/fadotcom-72.png" gap:platform="android" gap:density="hdpi" />	
+	<icon src="icons/fadotcom-57.png" gap:platform="ios" width="57" height="57" />
+    <icon src="icons/fadotcom-72.png" gap:platform="ios" width="72" height="72" />	
+</widget>

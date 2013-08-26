@@ -1,1 +1,0 @@
-// Dummy PhoneGap JavaScript file, to be substitued by the real one at deployment time

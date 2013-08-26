@@ -22,7 +22,7 @@ Stats.trace = function(page) {
 	var handleAs = "text";
 	
 	// Set trace info
-	var postBody = "v=1&tid=UA-38419451-1&cid="+this.cid+"&t=pageview&dp="+encodeURIComponent(page);
+	var postBody = "v=1&tid=UA-18664661-1&cid="+this.cid+"&t=pageview&dp="+encodeURIComponent(page);
 	$.post(url, postBody, function(r,s) { console.log(s); }, handleAs);
 }
 
