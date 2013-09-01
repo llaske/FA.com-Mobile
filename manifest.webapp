@@ -12,7 +12,7 @@
 		"30":"/icons/fadotcom-30.png"
     },
 	"permissions": {
-		"systemXHR": "Nécessaire pour accéder aux flux du site et pour statistiques."
+		"systemXHR": { "description": "Nécessaire pour l'accès aux flux du site et pour les statistiques"}
 	},	
     "description": "Toute l'actualité du Football Américain en France: les championnats américains NFL, NCAA et le championnat Elite en France.",
 	"default_locale": "fr"
