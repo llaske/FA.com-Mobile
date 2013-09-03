@@ -2,7 +2,8 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.footballamericain.mobile.android"
-        version   = "2.0.0">
+        version   = "2.0"
+		versionCode = "2">
     <name>Football Americain Mobile</name>
 
     <description>
