@@ -9,15 +9,22 @@ LocalStorage.test = function() {
 	
 // Set a value in the storage
 LocalStorage.setValue = function(key, value) {
-	if (this.test()) {	
-		window.localStorage.setItem(key, JSON.stringify(value));
+	if (this.test()) {
+		try {
+			window.localStorage.setItem(key, JSON.stringify(value));
+		} catch(err) {
+		}
 	}
 };
 	
 // Get a value in the storage
 LocalStorage.getValue = function(key) {
 	if (this.test()) {
-		return JSON.parse(window.localStorage.getItem(key));
+		try {
+			return JSON.parse(window.localStorage.getItem(key));
+		} catch(err) {
+			return null;
+		}
 	}
 	return null;
 };
