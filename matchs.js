@@ -215,6 +215,7 @@ $(document).on(clickAction, '#pg_match_detail > #match > #score > #teamdom', fun
 	// Push in history and change page
 	History.push('match_detail.html', teamdom);
     History.changePage("equipe.html");
+	return false;
 });
 $(document).on(clickAction, '#pg_match_detail > #match > #score > #teamext', function(event, ui) {
 	// Get team clicked
@@ -224,4 +225,5 @@ $(document).on(clickAction, '#pg_match_detail > #match > #score > #teamext', fun
 	// Push in history and change page
 	History.push('match_detail.html', teamext);
     History.changePage("equipe.html");
+	return false;
 });

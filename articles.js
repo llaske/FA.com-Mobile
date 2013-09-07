@@ -78,6 +78,7 @@ $(document).on(clickAction, 'ul[id="articles_all"] a', function(event, ui) {
 	// Push in history and change page
 	History.push('index.html', record);
     History.changePage("article_detail.html");
+	return false;
 });
 
 
@@ -144,5 +145,5 @@ $(document).on('pageshow', '#pg_detail_article', function(event, ui) {
 // HACK: Force Articles reference action (need for Firefox OS)
 $(document).on(clickAction, '#btnArticles', function(event, ui) {
 	History.changePage("index.html");
-	return true;
+	return false;
 });

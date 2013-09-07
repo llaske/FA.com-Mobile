@@ -202,6 +202,7 @@ $(document).on(clickAction, 'ul[id="articles_equipe"] a', function(event, ui) {
 	var team = $('#team').data('team');
 	History.push('equipe.html', record);	
     History.changePage("article_detail.html");
+	return false;
 });
 
 // Set match click handler
@@ -214,4 +215,5 @@ $(document).on(clickAction, 'ul[id="matchs_equipe"] a', function(event, ui) {
 	var team = $('#team').data('team');
 	History.push('equipe.html', {match: record, teamdom: TeamCache.getTeam(record.equipedom), teamext: TeamCache.getTeam(record.equipeext)});
     History.changePage("match_detail.html");
+	return false;
 });
