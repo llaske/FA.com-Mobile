@@ -23,7 +23,8 @@ function loadClassements() {
 		});	
 
 		// Display the current conference
-		displayClassements();
+		if (data.length > 1)
+			displayClassements();
 		
 		// Hide page loading message
 		$.mobile.hidePageLoadingMsg();
