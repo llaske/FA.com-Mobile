@@ -56,12 +56,12 @@ History.changePage = function(toPage) {
 }
 
 // Set back button event
-$('#btnBackHistory').live(clickAction, function(event, ui) {
+$(document).on(clickAction, '#btnBackHistory', function(event, ui) {
 	var pop = History.pop();
 	History.changePage(pop.screen);
 });
 
 // Set top page button event
-$('#btnTop').live(clickAction, function(event, ui) {
+$(document).on(clickAction, '#btnTop', function(event, ui) {
 	$('html, body').animate({ scrollTop: 0 }, 0);
 });

@@ -108,7 +108,7 @@ function updateMatchs() {
 }
 
 // Init page matchs
-$('#pg_matchs').live('pageshow', function(event, ui) {
+$(document).on('pageshow', '#pg_matchs', function(event, ui) {
 	// Show loading message
 	Stats.trace("/mobile/scores");	
 	$.mobile.showPageLoadingMsg();	
@@ -118,7 +118,7 @@ $('#pg_matchs').live('pageshow', function(event, ui) {
 });
 
 // Set article click handler
-$('ul[id="matchs"] a').live(clickAction, function(event, ui) {
+$(document).on(clickAction, 'ul[id="matchs"] a', function(event, ui) {
 	// Get match and team selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#matchs').data("records")[n];
@@ -133,7 +133,7 @@ $('ul[id="matchs"] a').live(clickAction, function(event, ui) {
 //----------------- Screen Detail Match
 
 // Init page detail article
-$('#pg_match_detail').live('pageshow', function(event, ui) {  
+$(document).on('pageshow', '#pg_match_detail', function(event, ui) {  
 	// Show page loading message
 	$.mobile.showPageLoadingMsg();
 	
@@ -195,7 +195,7 @@ $('#pg_match_detail').live('pageshow', function(event, ui) {
 });
 
 // Set article click handler from detail match
-$('ul[id="articles_match"] a').live(clickAction, function(event, ui) {
+$(document).on(clickAction, 'ul[id="articles_match"] a', function(event, ui) {
 	// Get article selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#articles_match').data("records")[n];
@@ -207,7 +207,7 @@ $('ul[id="articles_match"] a').live(clickAction, function(event, ui) {
 });
 
 // Set team click handler
-$('#pg_match_detail > #match > #score > #teamdom').live(clickAction, function(event, ui) {
+$(document).on(clickAction, '#pg_match_detail > #match > #score > #teamdom', function(event, ui) {
 	// Get team clicked
 	var param = $('#match').data('param');
 	var teamdom = param.teamdom;
@@ -216,7 +216,7 @@ $('#pg_match_detail > #match > #score > #teamdom').live(clickAction, function(ev
 	History.push('match_detail.html', teamdom);
     History.changePage("equipe.html");
 });
-$('#pg_match_detail > #match > #score > #teamext').live(clickAction, function(event, ui) {
+$(document).on(clickAction, '#pg_match_detail > #match > #score > #teamext', function(event, ui) {
 	// Get team clicked
 	var param = $('#match').data('param');
 	var teamext = param.teamext;

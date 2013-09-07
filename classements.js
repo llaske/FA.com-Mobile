@@ -44,11 +44,11 @@ function loadClassements() {
 function displayClassements() {
 	// Get records
 	var records = $('#classements').data('records');
-	var afc = $('#conference_afc').attr('checked');
+	var afc = $('input[name=conference]:checked').val() == "AFC";
 	var currentconf;
 	var bconf;
 	var econf;
-	if (afc != null) {
+	if (afc) {
 		currentconf = records.afc;
 		bconf = "<div class='ui-bar-e' style='margin-top: 10px'><strong>";
 		econf = "</strong></div>";
@@ -91,7 +91,7 @@ function displayClassements() {
 }
 
 // Init page classements
-$('#pg_classements').live('pageshow', function(event, ui) {
+$(document).on('pageshow', '#pg_classements', function(event, ui) {
 	// Show loading message
 	Stats.trace("/mobile/classements");
 	$.mobile.showPageLoadingMsg();	
@@ -101,9 +101,9 @@ $('#pg_classements').live('pageshow', function(event, ui) {
 });
 
 // Set conference click handler to change conference view
-$('input[name="conference"]').live('change', function(event, ui) {
+$(document).on('change', 'input[name="conference"]', function(event, ui) {
 	// Display the current conference
-	if ($('#conference_afc').attr('checked'))
+	if ($('input[name=conference]:checked').val() == "AFC")
 		Stats.trace("/mobile/AFC");
 	else
 		Stats.trace("/mobile/NFC");
@@ -111,7 +111,7 @@ $('input[name="conference"]').live('change', function(event, ui) {
 });
 
 // HACK: Force Articles reference action (need for Firefox OS)
-$('#btnArticles').live(clickAction, function(event, ui) {
+$(document).on(clickAction, '#btnArticles', function(event, ui) {
 	History.changePage("index.html");
 	return false;
 });

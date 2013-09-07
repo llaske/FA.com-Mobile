@@ -3,11 +3,13 @@
 
 prefixSite = "/";
 prefixBackoffice = "http://m.footballamericain.com/backoffice/v2/";
+//prefixSite = "/mobile/";
+//prefixBackoffice = "/mobile/backoffice/";
 prefixImages = "http://www.footballamericain.com/images/";
 
 
 // Override data-url with site prefix
-$("[data-role='page']").live('pagebeforecreate',function(event){
+$(document).on('pagebeforecreate', "[data-role='page']", function(event){
 	$("[data-role='page']").each(function(){
 		var dataurl = $(this).attr("data-url");
 		if(typeof dataurl != "undefined" && dataurl.indexOf(prefixSite) != 0) {
@@ -56,7 +58,7 @@ Preferences.getLigues = function() {
 //----------------- Screen Filtrer
 
 // Init page 
-$('#pg_filtrer').live('pageshow', function(event, ui) {  
+$(document).on('pageshow', '#pg_filtrer', function(event, ui) {  
 	Stats.trace("/mobile/filtrer");
 	$('#nfl').val(Preferences.nfl?'on':'off');
 	$('#nfl').slider('refresh');
@@ -68,7 +70,7 @@ $('#pg_filtrer').live('pageshow', function(event, ui) {
 });
 
 // Hide page, get new preferences
-$('ul[id="filtrer_nav"] a').live(clickAction, function(event, ui) {
+$(document).on(clickAction, 'ul[id="filtrer_nav"] a', function(event, ui) {
 	Preferences.nfl = ($('#nfl').val() == 'on');
 	LocalStorage.setValue('fa_nfl', Preferences.nfl);
 	Preferences.ncaa = ($('#ncaa').val() == 'on');

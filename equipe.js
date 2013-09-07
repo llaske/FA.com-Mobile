@@ -73,7 +73,7 @@ TeamCache.getTeam = function(id) {
 //----------------- Screen Equipe
 
 // Init page equipe
-$('#pg_equipe').live('pageshow', function(event, ui) {  
+$(document).on('pageshow', '#pg_equipe', function(event, ui) {  
 	// Show page loading message
 	$.mobile.showPageLoadingMsg();
 	
@@ -193,7 +193,7 @@ $('#pg_equipe').live('pageshow', function(event, ui) {
 });
 
 // Set article click handler from team
-$('ul[id="articles_equipe"] a').live(clickAction, function(event, ui) {
+$(document).on(clickAction, 'ul[id="articles_equipe"] a', function(event, ui) {
 	// Get article selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#articles_equipe').data("records")[n];
@@ -205,7 +205,7 @@ $('ul[id="articles_equipe"] a').live(clickAction, function(event, ui) {
 });
 
 // Set match click handler
-$('ul[id="matchs_equipe"] a').live(clickAction, function(event, ui) {
+$(document).on(clickAction, 'ul[id="matchs_equipe"] a', function(event, ui) {
 	// Get match and team selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#matchs_equipe').data("records")[n];

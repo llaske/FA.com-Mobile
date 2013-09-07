@@ -57,7 +57,7 @@ function updateArticles(target, param) {
 }
 
 // Init page articles
-$('#pg_articles').live('pageshow', function(event, ui) {
+$(document).on('pageinit', '#pg_articles', function(event, ui) {
 	// Show loading message
 	Stats.trace("/mobile/articles");
 	$.mobile.showPageLoadingMsg();	
@@ -70,7 +70,7 @@ $('#pg_articles').live('pageshow', function(event, ui) {
 });
 
 // Set article click handler from articles list
-$('ul[id="articles_all"] a').live(clickAction, function(event, ui) {
+$(document).on(clickAction, 'ul[id="articles_all"] a', function(event, ui) {
 	// Get article selected
 	var n = $(this).attr("data-index"); 
 	var record = $('#articles_all').data("records")[n];
@@ -85,7 +85,7 @@ $('ul[id="articles_all"] a').live(clickAction, function(event, ui) {
 //----------------- Screen Detail Article
 
 // Init page detail article
-$('#pg_detail_article').live('pageshow', function(event, ui) {  
+$(document).on('pageshow', '#pg_detail_article', function(event, ui) {  
 	// Show page loading message
 	$.mobile.showPageLoadingMsg();
 	
@@ -142,7 +142,7 @@ $('#pg_detail_article').live('pageshow', function(event, ui) {
 });
 
 // HACK: Force Articles reference action (need for Firefox OS)
-$('#btnArticles').live(clickAction, function(event, ui) {
+$(document).on(clickAction, '#btnArticles', function(event, ui) {
 	History.changePage("index.html");
 	return true;
 });
