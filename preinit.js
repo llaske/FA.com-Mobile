@@ -10,7 +10,7 @@ Stats.init();
 
 
 // HACK: Specific features for Firefox OS
-var prefixPage = "";
+var prefixPage = "./";
 var clickAction = 'vclick';
 var isFFOS = ("mozApps" in navigator && navigator.userAgent.search("Mobile") != -1);
 if (!isFFOS)
