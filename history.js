@@ -52,7 +52,7 @@ History.load = function() {
 
 // Move to a new page
 History.changePage = function(toPage) {
-	$.mobile.changePage(prefixPage+toPage);
+	$.mobile.changePage(urlPrefixPage+toPage);
 }
 
 // Set back button event
