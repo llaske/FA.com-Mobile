@@ -145,5 +145,5 @@ $(document).on('pageshow', '#pg_detail_article', function(event, ui) {
 // HACK: Force Articles reference action (need for Firefox OS)
 $(document).on(clickAction, '#btnArticles', function(event, ui) {
 	History.changePage("index.html");
-	return false;
+	return true;
 });
