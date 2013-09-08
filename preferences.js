@@ -1,9 +1,7 @@
 ﻿
 //----------------- Global constants
 
-prefixSite = "/";
 prefixBackoffice = "http://m.footballamericain.com/backoffice/v2/";
-//prefixSite = "/mobile/";
 //prefixBackoffice = "/mobile/backoffice/";
 prefixImages = "http://www.footballamericain.com/images/";
 
@@ -12,8 +10,8 @@ prefixImages = "http://www.footballamericain.com/images/";
 $(document).on('pagebeforecreate', "[data-role='page']", function(event){
 	$("[data-role='page']").each(function(){
 		var dataurl = $(this).attr("data-url");
-		if(typeof dataurl != "undefined" && dataurl.indexOf(prefixSite) != 0) {
-			dataurl = prefixSite + $(this).attr("data-url");
+		if(typeof dataurl != "undefined" && dataurl.indexOf(urlPrefixPage) != 0) {
+			dataurl = urlPrefixPage + $(this).attr("data-url");
 			$(this).attr("data-url", dataurl);
 		}
 	})

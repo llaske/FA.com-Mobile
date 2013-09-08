@@ -109,9 +109,3 @@ $(document).on('change', 'input[name="conference"]', function(event, ui) {
 		Stats.trace("/mobile/NFC");
 	displayClassements();
 });
-
-// HACK: Force Articles reference action (need for Firefox OS)
-$(document).on(clickAction, '#btnArticles', function(event, ui) {
-	History.changePage("index.html");
-	return false;
-});

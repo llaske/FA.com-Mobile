@@ -7,7 +7,6 @@ $(document).bind("mobileinit", function(){
   var loc = window.location;
   var pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
   urlPrefixPage = loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length))
-  console.log(urlPrefixPage);
 });
 
 // Init stats
