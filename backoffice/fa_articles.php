@@ -28,6 +28,7 @@
 	else
 		$cutpos = constant("max_resume_size");		
 	$result = null ;
+	$filtered = false;
 	
 	// Filter on id
 	$filterid = false;
@@ -35,26 +36,36 @@
 	{
 		$result = x_RedactionSectionSelect(null,null,null,null,$_GET['id'],$iPagerSpan,false,true,NEWS_NO) ;
 		$filterid = true;
+		$filtered = true;
 	}
 	
 	// Filter on team
 	if(isset($_GET['equipe'])&&!empty($_GET['equipe']))
 	{
 		$result = x_RedactionSectionSelect(null,FRANCHISE,$_GET['equipe'],null,null,$iPagerSpan,false,true,NEWS_NO) ;
+		$filtered = true;		
 	}
 
 	// Filter on ligue
 	if(isset($_GET['ligue'])&&!empty($_GET['ligue']))
 	{
 		$result = x_RedactionSectionSelect(null,LIGUE,$_GET['ligue'],null,null,$iPagerSpan,false,true,NEWS_NO) ; //toute les ligues $_GET['ligue']
+		$filtered = true;		
 	}
 
 	// Filter on match
 	if(isset($_GET['match'])&&!empty($_GET['match']))
 	{
 		$result = x_RedactionSectionSelect(null,MATCH,$_GET['match'],null,null,$iPagerSpan,false,true,NEWS_NO) ;
+		$filtered = true;		
 	}
 
+	// No filtered
+	if (!$filtered)
+	{
+		$result = x_RedactionSectionSelect(null,null,null,null,null,$iPagerSpan,false,true,NEWS_NO) ;	
+	}
+	
 	// Create array
 	$articles = array();
 	$i = 0;

@@ -60,7 +60,7 @@
 			$right = substr($content, $pos+1);
 			
 			// If starting by "http://", just add target
-			if (strncmp($right, "http://", 7) == 0) {
+			if (strncmp($right, "http://", 7) == 0 || strncmp($right, "https://", 8) == 0) {
 				$content = substr($content, 0, $init) . "<a target='_new' href=" . $quote . $right;			
 			}
 			
