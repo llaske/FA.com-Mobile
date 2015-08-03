@@ -11,6 +11,7 @@
   <link rel="apple-touch-icon" href="icons/fadotcom-72.png"/>
   <link rel="apple-touch-icon-precomposed" href="icons/fadotcom-72.png"/>  
   <script src="framework/jquery-1.9.1.min.js"></script>
+  <script src="cordova.js" type="text/javascript"></script>
   <script src="storage.js"></script>  
   <script src="analytics.js"></script>  
   <script src="preinit.js"></script>  
@@ -24,6 +25,13 @@
 </head>
 <body>
  
+<script type="text/javascropt">
+	// Force use of InAppBrowser plugin
+	document.addEventListener("deviceready", onDeviceReady, false);
+	function onDeviceReady() {
+		window.open = cordova.InAppBrowser.open;
+	}
+</script>
 <!-- Main page -->
 <div data-role="page" id="pg_articles" data-url="index.html" data-theme="b">
    <div data-role="header" id="header" data-theme="b">

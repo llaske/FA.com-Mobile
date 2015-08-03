@@ -104,7 +104,7 @@ $(document).on('pageshow', '#pg_detail_article', function(event, ui) {
 		html += '<h3>'+param.soustitre+'</h3>';
 		html += '<h6>le '+param.date+' par '+param.auteur+'</h6>';
 		html += '<img src="'+param.imagemedium+'"/>';
-		html += '<div style="text-align: justify;">'+data.corps+'</div>';
+		html += '<div id="corps" style="text-align: justify;">'+data.corps+'</div>';
 		$('#article').html(html);
 	  
 		// Hide page loading message
@@ -123,7 +123,7 @@ $(document).on('pageshow', '#pg_detail_article', function(event, ui) {
 				text = "Soyez le premier à commenter cet article !";
 			else
 				text = data.length + " commentaire" + (data.length > 1 ? "s":"") + " sur l'article";
-			html += '<br/><a target="_new" href="http://www.footballamericain.com'+urlsite+'#trackback" rel="external">'+text+'</a><br/><br/>';
+			html += '<br/><a id="sendcomment" target="_system" href="http://www.footballamericain.com'+urlsite+'#trackback" rel="external">'+text+'</a><br/><br/>';
 			$('#article').html(html);
 		})
 		
@@ -146,4 +146,15 @@ $(document).on('pageshow', '#pg_detail_article', function(event, ui) {
 $(document).on(clickAction, '#btnArticles', function(event, ui) {
 	History.changePage("index.html");
 	return true;
+});
+
+
+// Intercept external link in detail to open in the browser
+$(document).on(clickAction, '#corps a', function(event, ui) {
+	window.open(this.href, "_system");
+	return false;
+});
+$(document).on(clickAction, '#sendcomment', function(event, ui) {
+	window.open(this.href, "_system");
+	return false;
 });
