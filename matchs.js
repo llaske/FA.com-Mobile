@@ -74,7 +74,7 @@ function updateMatchs() {
 		if (n == 0 || records[n-1].journee != this.journee)
 			html += '<li data-role="list-divider">'+this.journee+'</li>';
 		html += '<li ><a href="#" data-index="'+n+'">';
-		html += '<img  src="'+prefixImages+'images/team/100/'+TeamCache.getTeam(this.equipedom).image+'" class="ui-li-icon" style="top: 0px; width: 30px;max-height: 40px"/>';
+		html += '<img  src="'+Preferences.getFairUseImage(prefixImages+'images/team/100/'+TeamCache.getTeam(this.equipedom).image)+'" class="ui-li-icon" style="top: 0px; width: 30px; max-width: 30px; max-height: 40px"/>';
 		html += '<p style="position: absolute; left: 45px; top: 10;max-height: 40px">'+TeamCache.getTeam(this.equipedom).nom+'</p>';
 		
 		// Display score or date match
@@ -95,7 +95,7 @@ function updateMatchs() {
 		
 		// Display team ext
 		html += '<p style="position: absolute; left: 200px; top: 10;max-height: 40px">'+TeamCache.getTeam(this.equipeext).nom+'</p>';		
-		html += '<img  src="'+prefixImages+'images/team/100/'+TeamCache.getTeam(this.equipeext).image+'" style="position: absolute; left: 260px; top: 0; width: 30px;max-height: 40px"/>';		
+		html += '<img  src="'+Preferences.getFairUseImage(prefixImages+'images/team/100/'+TeamCache.getTeam(this.equipeext).image)+'" style="position: absolute; left: 260px; top: 0; width: 30px;max-height: 40px"/>';		
 		html += "</a></li>";		
 		$("#matchs").append(html);		
 	});
@@ -150,7 +150,7 @@ $(document).on('pageshow', '#pg_match_detail', function(event, ui) {
 	$.getJSONWithMoz(url, function(data) {			
 		// Display score
 		var html = '';
-		html += '<img  src="'+prefixImages+'images/team/100/'+teamdom.image+'" style="position: absolute; left: 70px; top: 155px; width: 30px"/>';
+		html += '<img  src="'+Preferences.getFairUseImage(prefixImages+'images/team/100/'+teamdom.image)+'" style="position: absolute; left: 70px; top: 155px; width: 30px !important; max-width: 30px !important; max-height: 30px !important;"/>';
 		html += '<a href="#" id="teamdom" style="position: absolute; left: 50px; top: 180px">'+teamdom.nom+'</a>';
 		if (match.scoredom != null && match.scoreext != null) {
 			html += '<p style="position: absolute; left: 130px; top: 160px"><strong>'+match.scoredom+' - '+match.scoreext+'</strong></p>';
@@ -165,7 +165,7 @@ $(document).on('pageshow', '#pg_match_detail', function(event, ui) {
 			html += '<p style="position: absolute; left: 110px; top: 325px;max-height: 40px"><strong>'+dayNames[date.getDay()]+' '+date.getDate()+'/'+(date.getMonth()+1)+' - '+timeParts[0]+'h'+timeParts[1]+'</strong></p>';
 		}
 		html += '<a href="#" id="teamext" style="position: absolute; left: 210px; top: 180px">'+teamext.nom+'</a>';		
-		html += '<img  src="'+prefixImages+'images/team/100/'+teamext.image+'" style="position: absolute; left: 230px; top: 155px; width: 30px"/>';	
+		html += '<img  src="'+Preferences.getFairUseImage(prefixImages+'images/team/100/'+teamext.image)+'" style="position: absolute; left: 230px; top: 155px; width: 30px"/>';	
 		html += '<p style="position: absolute; left: 5px; top: 255px">'+teamdom.nom+'</p>';	
 		html += '<p style="position: absolute; left: 5px; top: 295px">'+teamext.nom+'</p>';			
 		$('#score').html(html);

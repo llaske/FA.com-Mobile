@@ -91,7 +91,7 @@ $(document).on('pageshow', '#pg_equipe', function(event, ui) {
 	}
 	html += ' <a target="_new" href="'+team.web+'" rel="external">Voir le site web</a>';
 	$('#team > #creation').html(html);	
-	$('#team > #image').html("<img src='"+prefixImages+"images/team/100/"+team.image+"' width=100px>");	
+	$('#team > #image').html("<img src='"+Preferences.getFairUseImage(prefixImages+"images/team/100/"+team.image)+"' width=100px>");	
 	
 	// Build url to get matchs	
 	var url = prefixBackoffice+'fa_matchs.php?ligue=1&equipe='+team.id;

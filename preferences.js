@@ -53,6 +53,15 @@ Preferences.getLigues = function() {
 	return ligues;
 }
 
+// Replace team image by fair use image on iOS
+Preferences.getFairUseImage = function(image) {
+	var useragent = navigator.userAgent.toLowerCase();	
+	var isiOS = (useragent.indexOf('iphone') != -1 || useragent.indexOf('ipad') != -1 || useragent.indexOf('ipod') != -1 );
+	if (isiOS)
+		return image.replace("-logo.jpg", "-logo-fu.png");
+	return image;	
+}
+
 //----------------- Screen Filtrer
 
 // Init page 
